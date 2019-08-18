@@ -1,0 +1,330 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D6A3B819-3C49-4225-9F5D-E1165BA4E818}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>MYPAM</RootNamespace>
+    <AssemblyName>AttendanceManagement</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>MYP.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.111.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.111.0\lib\net40\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.111.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.111.0\lib\net40\System.Data.SQLite.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.111.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.111.0\lib\net40\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Model\DataAccessObject\DaoAttendance.cs" />
+    <Compile Include="Model\DataAccessObject\DaoConfigFile.cs" />
+    <Compile Include="Model\DataAccessObject\DaoDbCommon.cs" />
+    <Compile Include="Model\DataAccessObject\DaoFingerPrint.cs" />
+    <Compile Include="Model\DataAccessObject\DaoSQL.cs" />
+    <Compile Include="Model\DataAccessObject\DaoUserInfo.cs" />
+    <Compile Include="Model\Extension\AssemblyInfoExtension.cs" />
+    <Compile Include="Model\Extension\DataTableExtension.cs" />
+    <Compile Include="Model\Extension\DateTimeExtension.cs" />
+    <Compile Include="Model\Extension\ObjectExtension.cs" />
+    <Compile Include="Model\Extension\StringBuilderExtension.cs" />
+    <Compile Include="Model\Extension\StringExtension.cs" />
+    <Compile Include="Model\Device\MYP2000.cs" />
+    <Compile Include="Model\Log\Logger.cs" />
+    <Compile Include="Model\MutiLanguage\LanguageControl.cs" />
+    <Compile Include="Model\MutiLanguage\LanguageEN.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LanguageEN.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MutiLanguage\LanguageZH_CHT.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LanguageZH_CHT.resx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Component\MessageBoxEx.cs" />
+    <Compile Include="View\Component\PageDataGridView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\Component\PageDataGridView.designer.cs">
+      <DependentUpon>PageDataGridView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\EventHandlers\KeyEventHandlers.cs" />
+    <Compile Include="View\FormAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FormAbout.Designer.cs">
+      <DependentUpon>FormAbout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\FormAttendance.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FormAttendance.Designer.cs">
+      <DependentUpon>FormAttendance.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\FormDelEmployee.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FormDelEmployee.Designer.cs">
+      <DependentUpon>FormDelEmployee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\FormDeleteAttendance.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FormDeleteAttendance.Designer.cs">
+      <DependentUpon>FormDeleteAttendance.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\FormEmployee.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FormEmployee.Designer.cs">
+      <DependentUpon>FormEmployee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\FormFingerPrint.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FormFingerPrint.Designer.cs">
+      <DependentUpon>FormFingerPrint.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\FormMypPW.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FormMypPW.Designer.cs">
+      <DependentUpon>FormMypPW.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\FormOption.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FormOption.Designer.cs">
+      <DependentUpon>FormOption.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Model\MutiLanguage\LanguageEN.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LanguageEN.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\MutiLanguage\LanguageZH_CHT.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LanguageZH_CHT.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="View\Component\PageDataGridView.resx">
+      <DependentUpon>PageDataGridView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\FormAbout.resx">
+      <DependentUpon>FormAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\FormAttendance.resx">
+      <DependentUpon>FormAttendance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\FormDelEmployee.resx">
+      <DependentUpon>FormDelEmployee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\FormDeleteAttendance.resx">
+      <DependentUpon>FormDeleteAttendance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\FormEmployee.resx">
+      <DependentUpon>FormEmployee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\FormFingerPrint.resx">
+      <DependentUpon>FormFingerPrint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\FormMain.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\FormMypPW.resx">
+      <DependentUpon>FormMypPW.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\FormOption.resx">
+      <DependentUpon>FormOption.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MYP.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IconSetting.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IconStop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IconAddDevice.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IconClearDeviceData.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IconDatabase.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IconDisableDevice.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IconDownload.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IconEnableDevice.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IconPowerOff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IconRefresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IconRemoveDevice.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="zkemkeeper">
+      <Guid>{FE9DED34-E159-408E-8490-B720A5E632C7}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\splash.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MYP.ico" />
+    <None Include="Resources\IconInfo.png" />
+    <None Include="Resources\IconAttendance.png" />
+    <None Include="Resources\IconEmployee.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>@echo off
+echo copy necessary files...
+xcopy "$(SolutionDir)NecessaryFiles" "$(TargetDir)" /s /y /a /e
+</PreBuildEvent>
+  </PropertyGroup>
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.111.0\build\net40\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.111.0\build\net40\System.Data.SQLite.Core.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>此專案參考這部電腦上所缺少的 NuGet 套件。請啟用 NuGet 套件還原，以下載該套件。如需詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的檔案是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.111.0\build\net40\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.111.0\build\net40\System.Data.SQLite.Core.targets'))" />
+  </Target>
+</Project>
