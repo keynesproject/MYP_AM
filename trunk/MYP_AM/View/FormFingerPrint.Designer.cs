@@ -31,11 +31,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormFingerPrint));
             this.tlpSetting = new System.Windows.Forms.TableLayoutPanel();
             this.lblName = new System.Windows.Forms.Label();
-            this.lblNumber = new System.Windows.Forms.Label();
+            this.lblMachineNo = new System.Windows.Forms.Label();
             this.lblIP = new System.Windows.Forms.Label();
             this.lblPort = new System.Windows.Forms.Label();
             this.tbName = new System.Windows.Forms.TextBox();
-            this.tbNumber = new System.Windows.Forms.TextBox();
+            this.tbMachineNo = new System.Windows.Forms.TextBox();
             this.tbPort = new System.Windows.Forms.TextBox();
             this.tlpButton = new System.Windows.Forms.TableLayoutPanel();
             this.btnNew = new System.Windows.Forms.Button();
@@ -50,6 +50,8 @@
             this.lblDotIP1 = new System.Windows.Forms.Label();
             this.lblEnable = new System.Windows.Forms.Label();
             this.cbEnable = new System.Windows.Forms.ComboBox();
+            this.lblLocation = new System.Windows.Forms.Label();
+            this.tbLocation = new System.Windows.Forms.TextBox();
             this.tlpSetting.SuspendLayout();
             this.tlpButton.SuspendLayout();
             this.tlpAckServerIP.SuspendLayout();
@@ -63,29 +65,32 @@
             this.tlpSetting.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpSetting.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 12F));
             this.tlpSetting.Controls.Add(this.lblName, 1, 1);
-            this.tlpSetting.Controls.Add(this.lblNumber, 1, 2);
-            this.tlpSetting.Controls.Add(this.lblIP, 1, 3);
-            this.tlpSetting.Controls.Add(this.lblPort, 1, 4);
+            this.tlpSetting.Controls.Add(this.lblMachineNo, 1, 3);
+            this.tlpSetting.Controls.Add(this.lblIP, 1, 4);
+            this.tlpSetting.Controls.Add(this.lblPort, 1, 5);
             this.tlpSetting.Controls.Add(this.tbName, 2, 1);
-            this.tlpSetting.Controls.Add(this.tbNumber, 2, 2);
-            this.tlpSetting.Controls.Add(this.tbPort, 2, 4);
-            this.tlpSetting.Controls.Add(this.tlpButton, 2, 6);
-            this.tlpSetting.Controls.Add(this.tlpAckServerIP, 2, 3);
-            this.tlpSetting.Controls.Add(this.lblEnable, 1, 5);
-            this.tlpSetting.Controls.Add(this.cbEnable, 2, 5);
+            this.tlpSetting.Controls.Add(this.tbMachineNo, 2, 3);
+            this.tlpSetting.Controls.Add(this.tbPort, 2, 5);
+            this.tlpSetting.Controls.Add(this.tlpButton, 2, 7);
+            this.tlpSetting.Controls.Add(this.tlpAckServerIP, 2, 4);
+            this.tlpSetting.Controls.Add(this.lblEnable, 1, 6);
+            this.tlpSetting.Controls.Add(this.cbEnable, 2, 6);
+            this.tlpSetting.Controls.Add(this.lblLocation, 1, 2);
+            this.tlpSetting.Controls.Add(this.tbLocation, 2, 2);
             this.tlpSetting.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpSetting.Location = new System.Drawing.Point(0, 0);
             this.tlpSetting.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tlpSetting.Name = "tlpSetting";
-            this.tlpSetting.RowCount = 7;
+            this.tlpSetting.RowCount = 8;
             this.tlpSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 12F));
             this.tlpSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpSetting.Size = new System.Drawing.Size(415, 261);
+            this.tlpSetting.Size = new System.Drawing.Size(415, 294);
             this.tlpSetting.TabIndex = 0;
             // 
             // lblName
@@ -96,23 +101,23 @@
             this.lblName.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblName.Location = new System.Drawing.Point(15, 12);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(48, 33);
+            this.lblName.Size = new System.Drawing.Size(64, 33);
             this.lblName.TabIndex = 0;
             this.lblName.Text = "名稱";
             this.lblName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // lblNumber
+            // lblMachineNo
             // 
-            this.lblNumber.AutoSize = true;
-            this.lblNumber.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblNumber.Font = new System.Drawing.Font("微軟正黑體", 10F);
-            this.lblNumber.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblNumber.Location = new System.Drawing.Point(15, 45);
-            this.lblNumber.Name = "lblNumber";
-            this.lblNumber.Size = new System.Drawing.Size(48, 33);
-            this.lblNumber.TabIndex = 1;
-            this.lblNumber.Text = "編號";
-            this.lblNumber.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblMachineNo.AutoSize = true;
+            this.lblMachineNo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblMachineNo.Font = new System.Drawing.Font("微軟正黑體", 10F);
+            this.lblMachineNo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblMachineNo.Location = new System.Drawing.Point(15, 78);
+            this.lblMachineNo.Name = "lblMachineNo";
+            this.lblMachineNo.Size = new System.Drawing.Size(64, 33);
+            this.lblMachineNo.TabIndex = 1;
+            this.lblMachineNo.Text = "設備編號";
+            this.lblMachineNo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblIP
             // 
@@ -120,9 +125,9 @@
             this.lblIP.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblIP.Font = new System.Drawing.Font("微軟正黑體", 10F);
             this.lblIP.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblIP.Location = new System.Drawing.Point(15, 78);
+            this.lblIP.Location = new System.Drawing.Point(15, 111);
             this.lblIP.Name = "lblIP";
-            this.lblIP.Size = new System.Drawing.Size(48, 36);
+            this.lblIP.Size = new System.Drawing.Size(64, 36);
             this.lblIP.TabIndex = 2;
             this.lblIP.Text = "IP地址";
             this.lblIP.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -133,9 +138,9 @@
             this.lblPort.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblPort.Font = new System.Drawing.Font("微軟正黑體", 10F);
             this.lblPort.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblPort.Location = new System.Drawing.Point(15, 114);
+            this.lblPort.Location = new System.Drawing.Point(15, 147);
             this.lblPort.Name = "lblPort";
-            this.lblPort.Size = new System.Drawing.Size(48, 33);
+            this.lblPort.Size = new System.Drawing.Size(64, 33);
             this.lblPort.TabIndex = 3;
             this.lblPort.Text = "端口";
             this.lblPort.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -144,43 +149,43 @@
             // 
             this.tbName.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbName.Font = new System.Drawing.Font("微軟正黑體", 10F);
-            this.tbName.Location = new System.Drawing.Point(69, 16);
+            this.tbName.Location = new System.Drawing.Point(85, 16);
             this.tbName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tbName.MaxLength = 128;
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(331, 25);
+            this.tbName.Size = new System.Drawing.Size(315, 25);
             this.tbName.TabIndex = 0;
             this.tbName.Click += new System.EventHandler(this.Control_Enter);
             this.tbName.Enter += new System.EventHandler(this.Control_Enter);
             this.tbName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NextControl);
             // 
-            // tbNumber
+            // tbMachineNo
             // 
-            this.tbNumber.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbNumber.Font = new System.Drawing.Font("微軟正黑體", 10F);
-            this.tbNumber.Location = new System.Drawing.Point(69, 49);
-            this.tbNumber.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tbNumber.MaxLength = 3;
-            this.tbNumber.Name = "tbNumber";
-            this.tbNumber.ReadOnly = true;
-            this.tbNumber.Size = new System.Drawing.Size(331, 25);
-            this.tbNumber.TabIndex = 1;
-            this.tbNumber.Text = "1";
-            this.tbNumber.Click += new System.EventHandler(this.Control_Enter);
-            this.tbNumber.Enter += new System.EventHandler(this.Control_Enter);
-            this.tbNumber.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyNumOnly);
-            this.tbNumber.Leave += new System.EventHandler(this.CheckedNumber);
+            this.tbMachineNo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbMachineNo.Font = new System.Drawing.Font("微軟正黑體", 10F);
+            this.tbMachineNo.Location = new System.Drawing.Point(85, 82);
+            this.tbMachineNo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.tbMachineNo.MaxLength = 3;
+            this.tbMachineNo.Name = "tbMachineNo";
+            this.tbMachineNo.ReadOnly = true;
+            this.tbMachineNo.Size = new System.Drawing.Size(315, 25);
+            this.tbMachineNo.TabIndex = 2;
+            this.tbMachineNo.Text = "1";
+            this.tbMachineNo.Click += new System.EventHandler(this.Control_Enter);
+            this.tbMachineNo.Enter += new System.EventHandler(this.Control_Enter);
+            this.tbMachineNo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyNumOnly);
+            this.tbMachineNo.Leave += new System.EventHandler(this.CheckedNumber);
             // 
             // tbPort
             // 
             this.tbPort.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbPort.Font = new System.Drawing.Font("微軟正黑體", 10F);
-            this.tbPort.Location = new System.Drawing.Point(69, 118);
+            this.tbPort.Location = new System.Drawing.Point(85, 151);
             this.tbPort.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tbPort.MaxLength = 5;
             this.tbPort.Name = "tbPort";
-            this.tbPort.Size = new System.Drawing.Size(331, 25);
-            this.tbPort.TabIndex = 3;
+            this.tbPort.Size = new System.Drawing.Size(315, 25);
+            this.tbPort.TabIndex = 4;
             this.tbPort.Text = "4370";
             this.tbPort.Click += new System.EventHandler(this.Control_Enter);
             this.tbPort.Enter += new System.EventHandler(this.Control_Enter);
@@ -196,22 +201,22 @@
             this.tlpButton.Controls.Add(this.btnNew, 1, 0);
             this.tlpButton.Controls.Add(this.btnExit, 2, 0);
             this.tlpButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpButton.Location = new System.Drawing.Point(69, 180);
+            this.tlpButton.Location = new System.Drawing.Point(85, 213);
             this.tlpButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tlpButton.Name = "tlpButton";
             this.tlpButton.RowCount = 1;
             this.tlpButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpButton.Size = new System.Drawing.Size(331, 77);
-            this.tlpButton.TabIndex = 5;
+            this.tlpButton.Size = new System.Drawing.Size(315, 77);
+            this.tlpButton.TabIndex = 6;
             // 
             // btnNew
             // 
             this.btnNew.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnNew.Font = new System.Drawing.Font("微軟正黑體", 10F);
-            this.btnNew.Location = new System.Drawing.Point(122, 12);
+            this.btnNew.Location = new System.Drawing.Point(117, 12);
             this.btnNew.Margin = new System.Windows.Forms.Padding(12);
             this.btnNew.Name = "btnNew";
-            this.btnNew.Size = new System.Drawing.Size(86, 53);
+            this.btnNew.Size = new System.Drawing.Size(81, 53);
             this.btnNew.TabIndex = 0;
             this.btnNew.Text = "新增";
             this.btnNew.UseVisualStyleBackColor = true;
@@ -221,10 +226,10 @@
             // 
             this.btnExit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnExit.Font = new System.Drawing.Font("微軟正黑體", 10F);
-            this.btnExit.Location = new System.Drawing.Point(232, 12);
+            this.btnExit.Location = new System.Drawing.Point(222, 12);
             this.btnExit.Margin = new System.Windows.Forms.Padding(12);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(87, 53);
+            this.btnExit.Size = new System.Drawing.Size(81, 53);
             this.btnExit.TabIndex = 1;
             this.btnExit.Text = "取消";
             this.btnExit.UseVisualStyleBackColor = true;
@@ -249,20 +254,20 @@
             this.tlpAckServerIP.Controls.Add(this.tbIP4, 6, 0);
             this.tlpAckServerIP.Controls.Add(this.lblDotIP1, 1, 0);
             this.tlpAckServerIP.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpAckServerIP.Location = new System.Drawing.Point(69, 82);
+            this.tlpAckServerIP.Location = new System.Drawing.Point(85, 115);
             this.tlpAckServerIP.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tlpAckServerIP.Name = "tlpAckServerIP";
             this.tlpAckServerIP.RowCount = 1;
             this.tlpAckServerIP.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpAckServerIP.Size = new System.Drawing.Size(331, 28);
-            this.tlpAckServerIP.TabIndex = 2;
+            this.tlpAckServerIP.Size = new System.Drawing.Size(315, 28);
+            this.tlpAckServerIP.TabIndex = 3;
             // 
             // lblDotIP3
             // 
             this.lblDotIP3.AutoSize = true;
             this.lblDotIP3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblDotIP3.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.lblDotIP3.Location = new System.Drawing.Point(243, 0);
+            this.lblDotIP3.Location = new System.Drawing.Point(231, 0);
             this.lblDotIP3.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
             this.lblDotIP3.Name = "lblDotIP3";
             this.lblDotIP3.Size = new System.Drawing.Size(15, 25);
@@ -275,7 +280,7 @@
             this.lblDotIP2.AutoSize = true;
             this.lblDotIP2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblDotIP2.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.lblDotIP2.Location = new System.Drawing.Point(157, 0);
+            this.lblDotIP2.Location = new System.Drawing.Point(149, 0);
             this.lblDotIP2.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
             this.lblDotIP2.Name = "lblDotIP2";
             this.lblDotIP2.Size = new System.Drawing.Size(15, 25);
@@ -292,7 +297,7 @@
             this.tbIP1.MaxLength = 3;
             this.tbIP1.Name = "tbIP1";
             this.tbIP1.ShortcutsEnabled = false;
-            this.tbIP1.Size = new System.Drawing.Size(71, 25);
+            this.tbIP1.Size = new System.Drawing.Size(67, 25);
             this.tbIP1.TabIndex = 0;
             this.tbIP1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tbIP1.Click += new System.EventHandler(this.Control_Enter);
@@ -304,12 +309,12 @@
             // 
             this.tbIP2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbIP2.Font = new System.Drawing.Font("Arial", 11.25F);
-            this.tbIP2.Location = new System.Drawing.Point(86, 0);
+            this.tbIP2.Location = new System.Drawing.Point(82, 0);
             this.tbIP2.Margin = new System.Windows.Forms.Padding(0);
             this.tbIP2.MaxLength = 3;
             this.tbIP2.Name = "tbIP2";
             this.tbIP2.ShortcutsEnabled = false;
-            this.tbIP2.Size = new System.Drawing.Size(71, 25);
+            this.tbIP2.Size = new System.Drawing.Size(67, 25);
             this.tbIP2.TabIndex = 1;
             this.tbIP2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tbIP2.Click += new System.EventHandler(this.Control_Enter);
@@ -321,12 +326,12 @@
             // 
             this.tbIP3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbIP3.Font = new System.Drawing.Font("Arial", 11.25F);
-            this.tbIP3.Location = new System.Drawing.Point(172, 0);
+            this.tbIP3.Location = new System.Drawing.Point(164, 0);
             this.tbIP3.Margin = new System.Windows.Forms.Padding(0);
             this.tbIP3.MaxLength = 3;
             this.tbIP3.Name = "tbIP3";
             this.tbIP3.ShortcutsEnabled = false;
-            this.tbIP3.Size = new System.Drawing.Size(71, 25);
+            this.tbIP3.Size = new System.Drawing.Size(67, 25);
             this.tbIP3.TabIndex = 2;
             this.tbIP3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tbIP3.Click += new System.EventHandler(this.Control_Enter);
@@ -338,12 +343,12 @@
             // 
             this.tbIP4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbIP4.Font = new System.Drawing.Font("Arial", 11.25F);
-            this.tbIP4.Location = new System.Drawing.Point(258, 0);
+            this.tbIP4.Location = new System.Drawing.Point(246, 0);
             this.tbIP4.Margin = new System.Windows.Forms.Padding(0);
             this.tbIP4.MaxLength = 3;
             this.tbIP4.Name = "tbIP4";
             this.tbIP4.ShortcutsEnabled = false;
-            this.tbIP4.Size = new System.Drawing.Size(73, 25);
+            this.tbIP4.Size = new System.Drawing.Size(69, 25);
             this.tbIP4.TabIndex = 3;
             this.tbIP4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tbIP4.Click += new System.EventHandler(this.Control_Enter);
@@ -356,7 +361,7 @@
             this.lblDotIP1.AutoSize = true;
             this.lblDotIP1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblDotIP1.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.lblDotIP1.Location = new System.Drawing.Point(71, 0);
+            this.lblDotIP1.Location = new System.Drawing.Point(67, 0);
             this.lblDotIP1.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
             this.lblDotIP1.Name = "lblDotIP1";
             this.lblDotIP1.Size = new System.Drawing.Size(15, 25);
@@ -370,9 +375,9 @@
             this.lblEnable.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblEnable.Font = new System.Drawing.Font("微軟正黑體", 10F);
             this.lblEnable.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblEnable.Location = new System.Drawing.Point(15, 147);
+            this.lblEnable.Location = new System.Drawing.Point(15, 180);
             this.lblEnable.Name = "lblEnable";
-            this.lblEnable.Size = new System.Drawing.Size(48, 29);
+            this.lblEnable.Size = new System.Drawing.Size(64, 29);
             this.lblEnable.TabIndex = 5;
             this.lblEnable.Text = "啟用";
             this.lblEnable.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -385,16 +390,40 @@
             this.cbEnable.Items.AddRange(new object[] {
             "開啟",
             "關閉"});
-            this.cbEnable.Location = new System.Drawing.Point(69, 150);
+            this.cbEnable.Location = new System.Drawing.Point(85, 183);
             this.cbEnable.Name = "cbEnable";
             this.cbEnable.Size = new System.Drawing.Size(86, 23);
-            this.cbEnable.TabIndex = 4;
+            this.cbEnable.TabIndex = 5;
             this.cbEnable.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NextControl);
+            // 
+            // lblLocation
+            // 
+            this.lblLocation.AutoSize = true;
+            this.lblLocation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblLocation.Font = new System.Drawing.Font("微軟正黑體", 10F);
+            this.lblLocation.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblLocation.Location = new System.Drawing.Point(15, 45);
+            this.lblLocation.Name = "lblLocation";
+            this.lblLocation.Size = new System.Drawing.Size(64, 33);
+            this.lblLocation.TabIndex = 6;
+            this.lblLocation.Text = "地點代碼";
+            this.lblLocation.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tbLocation
+            // 
+            this.tbLocation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbLocation.Font = new System.Drawing.Font("微軟正黑體", 10F);
+            this.tbLocation.Location = new System.Drawing.Point(85, 49);
+            this.tbLocation.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.tbLocation.MaxLength = 2;
+            this.tbLocation.Name = "tbLocation";
+            this.tbLocation.Size = new System.Drawing.Size(315, 25);
+            this.tbLocation.TabIndex = 1;
             // 
             // FormFingerPrint
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(415, 261);
+            this.ClientSize = new System.Drawing.Size(415, 294);
             this.Controls.Add(this.tlpSetting);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Arial", 9F);
@@ -419,11 +448,11 @@
 
         private System.Windows.Forms.TableLayoutPanel tlpSetting;
         private System.Windows.Forms.Label lblName;
-        private System.Windows.Forms.Label lblNumber;
+        private System.Windows.Forms.Label lblMachineNo;
         private System.Windows.Forms.Label lblIP;
         private System.Windows.Forms.Label lblPort;
         private System.Windows.Forms.TextBox tbName;
-        private System.Windows.Forms.TextBox tbNumber;
+        private System.Windows.Forms.TextBox tbMachineNo;
         private System.Windows.Forms.TextBox tbPort;
         private System.Windows.Forms.TableLayoutPanel tlpButton;
         private System.Windows.Forms.Button btnNew;
@@ -438,5 +467,7 @@
         private System.Windows.Forms.Label lblDotIP1;
         private System.Windows.Forms.Label lblEnable;
         private System.Windows.Forms.ComboBox cbEnable;
+        private System.Windows.Forms.Label lblLocation;
+        private System.Windows.Forms.TextBox tbLocation;
     }
 }

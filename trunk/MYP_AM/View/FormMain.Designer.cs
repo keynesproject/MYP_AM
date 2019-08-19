@@ -29,17 +29,18 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.msMain = new System.Windows.Forms.MenuStrip();
             this.tsmiMainSetting = new System.Windows.Forms.ToolStripMenuItem();
@@ -78,6 +79,7 @@
             this.tGiveTime = new System.Windows.Forms.Timer(this.components);
             this.columnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.columnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnLocation = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.columnEnable = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.columnStrEnable = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.columnConnect = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -120,7 +122,7 @@
             // tsmiOption
             // 
             this.tsmiOption.Name = "tsmiOption";
-            this.tsmiOption.Size = new System.Drawing.Size(180, 22);
+            this.tsmiOption.Size = new System.Drawing.Size(147, 22);
             this.tsmiOption.Text = "功能設定 (&S)";
             this.tsmiOption.Click += new System.EventHandler(this.TsmiOption_Click);
             // 
@@ -130,7 +132,7 @@
             this.員工資料ToolStripMenuItem,
             this.考勤資料ToolStripMenuItem});
             this.tsmiDatabase.Name = "tsmiDatabase";
-            this.tsmiDatabase.Size = new System.Drawing.Size(180, 22);
+            this.tsmiDatabase.Size = new System.Drawing.Size(147, 22);
             this.tsmiDatabase.Text = "檢視資訊 (&D)";
             // 
             // 員工資料ToolStripMenuItem
@@ -150,24 +152,24 @@
             // tsSeparatorSetting01
             // 
             this.tsSeparatorSetting01.Name = "tsSeparatorSetting01";
-            this.tsSeparatorSetting01.Size = new System.Drawing.Size(177, 6);
+            this.tsSeparatorSetting01.Size = new System.Drawing.Size(144, 6);
             // 
             // tsmiMYP
             // 
             this.tsmiMYP.Name = "tsmiMYP";
-            this.tsmiMYP.Size = new System.Drawing.Size(180, 22);
+            this.tsmiMYP.Size = new System.Drawing.Size(147, 22);
             this.tsmiMYP.Text = "MYP設定 (&O)";
             this.tsmiMYP.Click += new System.EventHandler(this.TsmiMYP_Click);
             // 
             // tsSeparatorSetting02
             // 
             this.tsSeparatorSetting02.Name = "tsSeparatorSetting02";
-            this.tsSeparatorSetting02.Size = new System.Drawing.Size(177, 6);
+            this.tsSeparatorSetting02.Size = new System.Drawing.Size(144, 6);
             // 
             // tsmiExit
             // 
             this.tsmiExit.Name = "tsmiExit";
-            this.tsmiExit.Size = new System.Drawing.Size(180, 22);
+            this.tsmiExit.Size = new System.Drawing.Size(147, 22);
             this.tsmiExit.Text = "結束 (&X)";
             this.tsmiExit.Click += new System.EventHandler(this.TsmiExit_Click);
             // 
@@ -182,7 +184,7 @@
             // tsmiAbout
             // 
             this.tsmiAbout.Name = "tsmiAbout";
-            this.tsmiAbout.Size = new System.Drawing.Size(180, 22);
+            this.tsmiAbout.Size = new System.Drawing.Size(167, 22);
             this.tsmiAbout.Text = "關於木研科技 (&A)";
             this.tsmiAbout.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TsbtnAbout_MouseUp);
             // 
@@ -424,18 +426,19 @@
             this.dgvDevice.AllowUserToResizeRows = false;
             this.dgvDevice.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvDevice.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Arial", 9F);
-            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvDevice.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial", 9F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvDevice.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvDevice.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDevice.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.columnID,
             this.columnName,
+            this.ColumnLocation,
             this.columnEnable,
             this.columnStrEnable,
             this.columnConnect,
@@ -450,12 +453,12 @@
             this.dgvDevice.MultiSelect = false;
             this.dgvDevice.Name = "dgvDevice";
             this.dgvDevice.ReadOnly = true;
-            dataGridViewCellStyle22.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle22.Font = new System.Drawing.Font("Arial", 9F);
-            dataGridViewCellStyle22.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle22.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle22.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.dgvDevice.RowHeadersDefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Arial", 9F);
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            this.dgvDevice.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
             this.dgvDevice.RowHeadersVisible = false;
             this.dgvDevice.RowTemplate.Height = 24;
             this.dgvDevice.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -477,8 +480,8 @@
             // 
             this.columnID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.columnID.DataPropertyName = "ID";
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.columnID.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.columnID.DefaultCellStyle = dataGridViewCellStyle2;
             this.columnID.HeaderText = "ID";
             this.columnID.MaxInputLength = 4;
             this.columnID.MinimumWidth = 25;
@@ -490,20 +493,33 @@
             // 
             this.columnName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.columnName.DataPropertyName = "Name";
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.columnName.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.columnName.DefaultCellStyle = dataGridViewCellStyle3;
             this.columnName.HeaderText = "設備名稱";
             this.columnName.MaxInputLength = 128;
             this.columnName.MinimumWidth = 130;
             this.columnName.Name = "columnName";
             this.columnName.ReadOnly = true;
             // 
+            // ColumnLocation
+            // 
+            this.ColumnLocation.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ColumnLocation.DataPropertyName = "Location";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColumnLocation.DefaultCellStyle = dataGridViewCellStyle4;
+            this.ColumnLocation.FillWeight = 70F;
+            this.ColumnLocation.HeaderText = "地點代碼";
+            this.ColumnLocation.MaxInputLength = 2;
+            this.ColumnLocation.MinimumWidth = 80;
+            this.ColumnLocation.Name = "ColumnLocation";
+            this.ColumnLocation.ReadOnly = true;
+            // 
             // columnEnable
             // 
             this.columnEnable.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.columnEnable.DataPropertyName = "Enable";
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.columnEnable.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.columnEnable.DefaultCellStyle = dataGridViewCellStyle5;
             this.columnEnable.HeaderText = "啟用狀態";
             this.columnEnable.MaxInputLength = 128;
             this.columnEnable.MinimumWidth = 80;
@@ -515,8 +531,8 @@
             // 
             this.columnStrEnable.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.columnStrEnable.DataPropertyName = "strEnable";
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.columnStrEnable.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.columnStrEnable.DefaultCellStyle = dataGridViewCellStyle6;
             this.columnStrEnable.HeaderText = "啟用狀態";
             this.columnStrEnable.MaxInputLength = 128;
             this.columnStrEnable.MinimumWidth = 80;
@@ -527,8 +543,8 @@
             // 
             this.columnConnect.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.columnConnect.DataPropertyName = "Connect";
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.columnConnect.DefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.columnConnect.DefaultCellStyle = dataGridViewCellStyle7;
             this.columnConnect.HeaderText = "連線狀態";
             this.columnConnect.MaxInputLength = 128;
             this.columnConnect.MinimumWidth = 80;
@@ -540,8 +556,8 @@
             // 
             this.columnStrConnect.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.columnStrConnect.DataPropertyName = "strConnect";
-            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.columnStrConnect.DefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.columnStrConnect.DefaultCellStyle = dataGridViewCellStyle8;
             this.columnStrConnect.HeaderText = "連線狀態";
             this.columnStrConnect.MaxInputLength = 128;
             this.columnStrConnect.MinimumWidth = 80;
@@ -552,8 +568,8 @@
             // 
             this.columnNo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.columnNo.DataPropertyName = "MachineNo";
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.columnNo.DefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.columnNo.DefaultCellStyle = dataGridViewCellStyle9;
             this.columnNo.HeaderText = "機器號";
             this.columnNo.MaxInputLength = 4;
             this.columnNo.MinimumWidth = 70;
@@ -565,8 +581,8 @@
             // 
             this.columnIP.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.columnIP.DataPropertyName = "IP";
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.columnIP.DefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.columnIP.DefaultCellStyle = dataGridViewCellStyle10;
             this.columnIP.HeaderText = "IP地址";
             this.columnIP.MaxInputLength = 128;
             this.columnIP.MinimumWidth = 110;
@@ -588,8 +604,8 @@
             // 
             this.columnAttCount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.columnAttCount.DataPropertyName = "AttendanceCount";
-            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.columnAttCount.DefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.columnAttCount.DefaultCellStyle = dataGridViewCellStyle11;
             this.columnAttCount.HeaderText = "考勤紀錄";
             this.columnAttCount.MaxInputLength = 10;
             this.columnAttCount.MinimumWidth = 80;
@@ -665,6 +681,7 @@
         private System.Windows.Forms.ToolStripButton tsbtnAttendance;
         private System.Windows.Forms.DataGridViewTextBoxColumn columnID;
         private System.Windows.Forms.DataGridViewTextBoxColumn columnName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnLocation;
         private System.Windows.Forms.DataGridViewTextBoxColumn columnEnable;
         private System.Windows.Forms.DataGridViewTextBoxColumn columnStrEnable;
         private System.Windows.Forms.DataGridViewTextBoxColumn columnConnect;

@@ -186,22 +186,17 @@ namespace MYPAM.Model.DataAccessObject
         /// <param name="IP"></param>
         /// <param name="Port"></param>
         /// <returns></returns>
-        internal DaoErrMsg AddNewMachine(string Name, int No, string IP, int Port, bool isEnable)
+        internal DaoErrMsg AddNewMachine(string Name, string Location, int No, string IP, int Port, bool isEnable)
         {
-            string strSchema = string.Format(@"INSERT OR REPLACE INTO tbMachine(ID, Name, MachineNo, IP, Port, Enable)
+            string strSchema = string.Format(@"INSERT OR REPLACE INTO tbMachine(ID, Name, MachineNo, Location, IP, Port, Enable)
                                               VALUES((select ID from tbMachine where IP=@P0 and Port={0}),
                                                  @P1,
                                                  {1},
+                                                 '{2}',
                                                  @P2,
                                                  {0},
-                                                 {2});",
-                                              Port, No, isEnable == true ? 1 : 0);
-
-            //string strSchema = string.Format(@"IF NOT EXISTS (SELECT * FROM tbMACHINE 
-            //                                                  WHERE IP=@P0 and port={0}  )
-            //                                   INSERT INTO tbMACHINE(Name, MachineNo, IP, Port, Enable)
-            //                                                  values(@P1, {1}, @P2, {0}, {2});",
-            //                                   Port, No, isEnable == true ? 1 : 0);
+                                                 {3});",
+                                              Port, No, Location, isEnable == true ? 1 : 0);
             
             return _SQL.ExecuteNonQuery(strSchema, IP, Name, IP);
         }

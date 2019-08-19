@@ -242,7 +242,7 @@ namespace MYPAM.Model.Device
                         Info.UserID = iEnrollNumber;
                         //Info.UserName;   //從Employees表格取得;//
                         //Info.CardNumber; //從Employees表格取得;//
-                        Info.Location = m_daoFP.Name;
+                        Info.Location = m_daoFP.Location;
                         string Date = string.Format("{0}-{1:00}-{2:00} {3:00}:{4:00}:{5:00}", iYear, iMonth, iDay, iHour, iMinute, iSecond);
                         Info.RecordTime = DateTime.ParseExact(Date, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
                         lAttInfo.Add(Info);

@@ -39,7 +39,7 @@ namespace MYPAM.View
                     return;
             }
 
-            DaoErrMsg Ret = DaoSQL.Instance.AddNewMachine(tbName.Text, tbNumber.Text.ToInt(), IP, tbPort.Text.ToInt(), isEnable);
+            DaoErrMsg Ret = DaoSQL.Instance.AddNewMachine(tbName.Text, tbLocation.Text.PadLeft(2, '0'), tbMachineNo.Text.ToInt(), IP, tbPort.Text.ToInt(), isEnable);
 
             if (Ret.isError == false)
             {

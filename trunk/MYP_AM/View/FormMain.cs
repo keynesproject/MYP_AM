@@ -77,8 +77,8 @@ namespace MYPAM
                         tsBtnStartLoadDevice.Enabled = true;
                         tsBtnStopLoadDevice.Enabled = false;
                         tsBtnUpdateData.Enabled = false;
-                        tsBtnEnableDevice.Enabled = false;
-                        tsBtnDisableDevice.Enabled = false;
+                        tsBtnEnableDevice.Enabled = true;
+                        tsBtnDisableDevice.Enabled = true;
                         tsBtnDelDeviceAttendance.Enabled = false;
                         tsBtnAddDevice.Enabled = true;
                         tsBtnRemoveDevice.Enabled = true;
@@ -92,7 +92,7 @@ namespace MYPAM
                         tsBtnUpdateData.Enabled = false;
                         tsBtnEnableDevice.Enabled = true;
                         tsBtnDisableDevice.Enabled = true;
-                        tsBtnDelDeviceAttendance.Enabled = true;
+                        tsBtnDelDeviceAttendance.Enabled = false;
                         tsBtnAddDevice.Enabled = true;
                         tsBtnRemoveDevice.Enabled = true;
                         tsslState.Text = string.Format("按下[{0}]開始讀取設備考勤及人員資料", tsBtnStartLoadDevice.Text);

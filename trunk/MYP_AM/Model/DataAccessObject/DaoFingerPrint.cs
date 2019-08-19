@@ -82,6 +82,11 @@ namespace MYPAM.Model.DataAccessObject
                     return "禁用";
             }
             set { }
-        }        
+        }
+
+        /// <summary>
+        /// 地點
+        /// </summary>
+        public string Location { get; set; }
     }
 }
