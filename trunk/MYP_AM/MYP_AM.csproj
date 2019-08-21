@@ -7,7 +7,7 @@
     <ProjectGuid>{D6A3B819-3C49-4225-9F5D-E1165BA4E818}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>MYPAM</RootNamespace>
-    <AssemblyName>木研科技_刷卡機管理系統</AssemblyName>
+    <AssemblyName>木研科技-出勤管理系統</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

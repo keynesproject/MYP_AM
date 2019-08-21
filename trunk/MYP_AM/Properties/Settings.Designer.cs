@@ -25,54 +25,6 @@ namespace MYPAM.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("HRAT\\SQLEXPRESS")]
-        public string DB_SERVER_NAME {
-            get {
-                return ((string)(this["DB_SERVER_NAME"]));
-            }
-            set {
-                this["DB_SERVER_NAME"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MYP")]
-        public string DB_NAME {
-            get {
-                return ((string)(this["DB_NAME"]));
-            }
-            set {
-                this["DB_NAME"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("SA")]
-        public string DB_ID {
-            get {
-                return ((string)(this["DB_ID"]));
-            }
-            set {
-                this["DB_ID"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Myp53750804")]
-        public string DB_PW {
-            get {
-                return ((string)(this["DB_PW"]));
-            }
-            set {
-                this["DB_PW"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool IsOpenMypSetting {
             get {
@@ -116,6 +68,18 @@ namespace MYPAM.Properties {
             }
             set {
                 this["MonitorFingerPrint"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("./Attendance")]
+        public string ExportAttPath {
+            get {
+                return ((string)(this["ExportAttPath"]));
+            }
+            set {
+                this["ExportAttPath"] = value;
             }
         }
     }

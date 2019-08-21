@@ -4,6 +4,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace MYPAM.Model.DataAccessObject
 {
@@ -24,7 +25,7 @@ namespace MYPAM.Model.DataAccessObject
 
         private string m_DirConfig = "Config";
 
-        internal string m_DirAttExport = @".\Attendance\";
+        private string m_DirAttExport = @"./Attendance/";
 
         internal string m_FileDatabase = "MYP_AM.db";
 
@@ -32,10 +33,7 @@ namespace MYPAM.Model.DataAccessObject
         
         private DaoConfigFile()
         {
-            if (Directory.Exists(m_DirAttExport) == false)
-            {
-                Directory.CreateDirectory(m_DirAttExport);
-            }
+            DirAttExport = Properties.Settings.Default.ExportAttPath;            
         }
 
         /// <summary>
@@ -62,6 +60,39 @@ namespace MYPAM.Model.DataAccessObject
         internal string FileDatabase
         {
             get { return DirConfig + m_FileDatabase; }
+        }
+
+        internal string DirAttExport
+        {
+            get
+            {
+                return m_DirAttExport;
+            }
+
+            set
+            {                
+                try
+                {
+                    if (Directory.Exists(value) == false)
+                    {
+                        Directory.CreateDirectory(value);
+                    }
+
+                    if(value.IndexOf("./")==0)
+                    {
+                        m_DirAttExport = Directory.GetCurrentDirectory() + "/" + value.Replace("./", "");
+                    }
+                    else
+                    {
+                        m_DirAttExport = value;
+                    }
+                    Properties.Settings.Default.ExportAttPath = m_DirAttExport;
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
         }
 
         #region Log 資料

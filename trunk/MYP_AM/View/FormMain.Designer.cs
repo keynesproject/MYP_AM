@@ -75,8 +75,6 @@
             this.tsslState = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsslTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.dgvDevice = new System.Windows.Forms.DataGridView();
-            this.tClock = new System.Windows.Forms.Timer(this.components);
-            this.tGiveTime = new System.Windows.Forms.Timer(this.components);
             this.columnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.columnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnLocation = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -88,6 +86,8 @@
             this.columnIP = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.columnPort = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.columnAttCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tClock = new System.Windows.Forms.Timer(this.components);
+            this.tGiveTime = new System.Windows.Forms.Timer(this.components);
             this.msMain.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.ssStatus.SuspendLayout();
@@ -466,16 +466,6 @@
             this.dgvDevice.TabIndex = 3;
             this.dgvDevice.TabStop = false;
             // 
-            // tClock
-            // 
-            this.tClock.Enabled = true;
-            this.tClock.Tick += new System.EventHandler(this.TClock_Tick);
-            // 
-            // tGiveTime
-            // 
-            this.tGiveTime.Interval = 60000;
-            this.tGiveTime.Tick += new System.EventHandler(this.TGiveTime_Tick);
-            // 
             // columnID
             // 
             this.columnID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
@@ -612,6 +602,16 @@
             this.columnAttCount.Name = "columnAttCount";
             this.columnAttCount.ReadOnly = true;
             // 
+            // tClock
+            // 
+            this.tClock.Enabled = true;
+            this.tClock.Tick += new System.EventHandler(this.TClock_Tick);
+            // 
+            // tGiveTime
+            // 
+            this.tGiveTime.Interval = 60000;
+            this.tGiveTime.Tick += new System.EventHandler(this.TGiveTime_Tick);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -627,7 +627,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MinimumSize = new System.Drawing.Size(800, 450);
             this.Name = "FormMain";
-            this.Text = "木研科技 - 刷卡機管理系統 V1.0.0.1";
+            this.Text = "木研科技-出勤管理系統 V1.0.0.1";
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.Shown += new System.EventHandler(this.FormMain_Shown);
             this.msMain.ResumeLayout(false);

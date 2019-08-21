@@ -2,18 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MYPAM.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="DB_SERVER_NAME" Type="System.String" Scope="User">
-      <Value Profile="(Default)">HRAT\SQLEXPRESS</Value>
-    </Setting>
-    <Setting Name="DB_NAME" Type="System.String" Scope="User">
-      <Value Profile="(Default)">MYP</Value>
-    </Setting>
-    <Setting Name="DB_ID" Type="System.String" Scope="User">
-      <Value Profile="(Default)">SA</Value>
-    </Setting>
-    <Setting Name="DB_PW" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Myp53750804</Value>
-    </Setting>
     <Setting Name="IsOpenMypSetting" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
@@ -25,6 +13,9 @@
     </Setting>
     <Setting Name="MonitorFingerPrint" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ExportAttPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">./Attendance</Value>
     </Setting>
   </Settings>
 </SettingsFile>

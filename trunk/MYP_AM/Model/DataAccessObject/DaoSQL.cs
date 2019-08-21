@@ -89,48 +89,7 @@ namespace MYPAM.Model.DataAccessObject
 
             _SQL = null;
         }
-
-        /// <summary>
-        /// 連接MSSQL資料庫
-        /// </summary>
-        /// <returns></returns>
-        private DaoErrMsg ConnectMSSQL(string ServerPath, string DbName, string DbID, string DbPW)
-        {
-            DaoErrMsg Err = new DaoErrMsg();
-
-            if (_SQL != null)
-            {
-                //表示已開啟過;//
-                return Err;
-            }
-
-            //建立資料庫連接字串
-            ////注意：SQLExpress版本要寫成：「.\sqlexpress」
-            //string strServerPath = Properties.Settings.Default.DB_SERVER_NAME;
-            ////strServerPath = @"KEYNES-PC\EXPRESS";
-            //string strDbName = Properties.Settings.Default.DB_NAME;
-            //string strDbID = Properties.Settings.Default.DB_ID;
-            //string strDbPW = Properties.Settings.Default.DB_PW;
-            string strConnection = string.Format(@"server={0};database={1};uid={2};pwd={3}",
-                ServerPath,
-                DbName,
-                DbID,
-                DbPW);
-
-            _SQL = new DaoDbCommon(strConnection, new SqlConnection());
-
-            Err = _SQL.Connect();
-
-            if (Err.isError)
-            {
-                System.Diagnostics.Debug.WriteLine(Err.ErrorMsg);
-                _SQL = null;
-                return Err;
-            }
-            
-            return Err;
-        }
-       
+               
         /// <summary>
         /// 照SQL語法取得Table資料
         /// </summary>
@@ -359,6 +318,11 @@ namespace MYPAM.Model.DataAccessObject
             _SQL.ExecuteNonQuery(strSchema);
         }
 
+        /// <summary>
+        /// 設定打卡考勤資訊
+        /// </summary>
+        /// <param name="DeviceID">裝置ID</param>
+        /// <param name="AttInfo">打卡資訊</param>
         internal void SetAttendance(int DeviceID, List<DaoAttendance> AttInfo)
         {
             StringBuilder sbSchema = new StringBuilder();
@@ -386,7 +350,7 @@ namespace MYPAM.Model.DataAccessObject
 
             if(Count != 0)
                 _SQL.ExecuteNonQuery(sbSchema.ToString());
-
+            
             sbSchema.Init();
             sbSchema.AppendFormat("update tbMachine set ReadIndex = ReadIndex + {0} where ID = {1};", AttInfo.Count, DeviceID);
             _SQL.ExecuteNonQuery(sbSchema.ToString());

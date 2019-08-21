@@ -455,7 +455,7 @@ namespace MYPAM
         /// <summary>
         /// 更新考勤及使用者資訊
         /// </summary>
-        private void UpdateAttAnUser(string strGiveTime="")
+        private void UpdateAttAnUser()
         {
             m_isLoading = true;
 
@@ -495,7 +495,7 @@ namespace MYPAM
                     if (AttInfo.Count > 0)
                     {
                         DaoSQL.Instance.SetAttendance(device.DeviceInfo.ID.ToInt(), AttInfo);
-                        ExportToTxt(AttInfo, strGiveTime);
+                        ExportToTxt(AttInfo);
                     }
 
                     //記錄現有考勤數量;//
@@ -513,32 +513,24 @@ namespace MYPAM
 
                 tsBtnStopLoadDevice.Enabled = true;
                 tsBtnUpdateData.Enabled = true;
-
             });
             m_isLoading = false;
         }
 
-        private void ExportToTxt(List<DaoAttendance> attInfo, string strGiveTime)
+        private void ExportToTxt(List<DaoAttendance> attInfo)
         {
-            FileStream fs;
-            string FileName = DaoConfigFile.Instance.m_DirAttExport;
-            if (strGiveTime.Length == 0)
-            {
-                FileName = FileName + DateTime.Now.ToString("yyyyMMddhhmm") + ".txt";
-                fs = new FileStream(FileName, FileMode.Append);
-            }
-            else
-            {
-                FileName = FileName + strGiveTime + ".txt";
-                fs = new FileStream(FileName, FileMode.Create);
-            }
+            string FileName = DaoConfigFile.Instance.DirAttExport + "/";
+
+            FileName = FileName + DateTime.Now.ToString("yyyyMMddHHmm") + ".txt";
+            FileStream fs = new FileStream(FileName, FileMode.Append);
+
             StreamWriter sw = new StreamWriter(fs);
 
             foreach (DaoAttendance att in attInfo)
             {
                 sw.Write(string.Format("{0}{1}{2}\n",
                                         string.Format("{0:000000}", att.UserID),
-                                        att.RecordTime.ToString("yyyyMMddhhmm"),
+                                        att.RecordTime.ToString("yyyyMMddHHmm"),
                                         string.Format("{0:00}", att.Location)));
             }
             //清空緩衝區
@@ -546,16 +538,6 @@ namespace MYPAM
             //關閉流
             sw.Close();
             fs.Close();
-        }
-
-        /// <summary>
-        /// 關於按鍵按下事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TsmiAbout_Click(object sender, EventArgs e)
-        {
-
         }
         
         /// <summary>
