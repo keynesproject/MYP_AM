@@ -122,7 +122,7 @@
             // tsmiOption
             // 
             this.tsmiOption.Name = "tsmiOption";
-            this.tsmiOption.Size = new System.Drawing.Size(147, 22);
+            this.tsmiOption.Size = new System.Drawing.Size(180, 22);
             this.tsmiOption.Text = "功能設定 (&S)";
             this.tsmiOption.Click += new System.EventHandler(this.TsmiOption_Click);
             // 
@@ -132,44 +132,45 @@
             this.員工資料ToolStripMenuItem,
             this.考勤資料ToolStripMenuItem});
             this.tsmiDatabase.Name = "tsmiDatabase";
-            this.tsmiDatabase.Size = new System.Drawing.Size(147, 22);
+            this.tsmiDatabase.Size = new System.Drawing.Size(180, 22);
             this.tsmiDatabase.Text = "檢視資訊 (&D)";
             // 
             // 員工資料ToolStripMenuItem
             // 
             this.員工資料ToolStripMenuItem.Name = "員工資料ToolStripMenuItem";
-            this.員工資料ToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.員工資料ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.員工資料ToolStripMenuItem.Text = "員工資料 (&E)";
+            this.員工資料ToolStripMenuItem.Visible = false;
             this.員工資料ToolStripMenuItem.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TsBtnEmployee_MouseUp);
             // 
             // 考勤資料ToolStripMenuItem
             // 
             this.考勤資料ToolStripMenuItem.Name = "考勤資料ToolStripMenuItem";
-            this.考勤資料ToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.考勤資料ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.考勤資料ToolStripMenuItem.Text = "考勤資料 (&A)";
             this.考勤資料ToolStripMenuItem.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TsbtnAttendance_MouseUp);
             // 
             // tsSeparatorSetting01
             // 
             this.tsSeparatorSetting01.Name = "tsSeparatorSetting01";
-            this.tsSeparatorSetting01.Size = new System.Drawing.Size(144, 6);
+            this.tsSeparatorSetting01.Size = new System.Drawing.Size(177, 6);
             // 
             // tsmiMYP
             // 
             this.tsmiMYP.Name = "tsmiMYP";
-            this.tsmiMYP.Size = new System.Drawing.Size(147, 22);
+            this.tsmiMYP.Size = new System.Drawing.Size(180, 22);
             this.tsmiMYP.Text = "MYP設定 (&O)";
             this.tsmiMYP.Click += new System.EventHandler(this.TsmiMYP_Click);
             // 
             // tsSeparatorSetting02
             // 
             this.tsSeparatorSetting02.Name = "tsSeparatorSetting02";
-            this.tsSeparatorSetting02.Size = new System.Drawing.Size(144, 6);
+            this.tsSeparatorSetting02.Size = new System.Drawing.Size(177, 6);
             // 
             // tsmiExit
             // 
             this.tsmiExit.Name = "tsmiExit";
-            this.tsmiExit.Size = new System.Drawing.Size(147, 22);
+            this.tsmiExit.Size = new System.Drawing.Size(180, 22);
             this.tsmiExit.Text = "結束 (&X)";
             this.tsmiExit.Click += new System.EventHandler(this.TsmiExit_Click);
             // 
@@ -184,7 +185,7 @@
             // tsmiAbout
             // 
             this.tsmiAbout.Name = "tsmiAbout";
-            this.tsmiAbout.Size = new System.Drawing.Size(167, 22);
+            this.tsmiAbout.Size = new System.Drawing.Size(180, 22);
             this.tsmiAbout.Text = "關於木研科技 (&A)";
             this.tsmiAbout.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TsbtnAbout_MouseUp);
             // 
@@ -229,6 +230,7 @@
             this.tsBtnEmployee.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.tsBtnEmployee.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsBtnEmployee.ToolTipText = "檢視員工資料";
+            this.tsBtnEmployee.Visible = false;
             this.tsBtnEmployee.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TsBtnEmployee_MouseUp);
             // 
             // tsbtnAttendance
@@ -627,7 +629,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MinimumSize = new System.Drawing.Size(800, 450);
             this.Name = "FormMain";
-            this.Text = "木研科技-出勤管理系統 V1.0.0.1";
+            this.Text = "木研科技-出勤管理系統 V1.0.0.2";
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.Shown += new System.EventHandler(this.FormMain_Shown);
             this.msMain.ResumeLayout(false);

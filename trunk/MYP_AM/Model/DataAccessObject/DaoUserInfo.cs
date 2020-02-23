@@ -8,9 +8,11 @@ namespace MYPAM.Model.DataAccessObject
 {
     public class DaoUserInfo
     {
-        public int UserID { get; set; }
+        public Int64 ID { get; set; }
 
-        public string sUserID
+        public Int64 UserID { get; set; }
+
+        private string sUserID
         {
             get
             {
@@ -36,30 +38,45 @@ namespace MYPAM.Model.DataAccessObject
                 //    string sHead = NunberToChar(sIndex.ToInt());
                 //    return sHead + ID.Substring(1);
                 //}     
-
             }
         }
 
-        private string m_UserName = "";
+        private string _UserName = "";
+
         public string Name
         {
-            get { return m_UserName; }
+            get { return _UserName; }
             set
             {
                 if (value.Length > 0)
                 {
                     if (value.Contains('\0'))
-                        m_UserName = value.Remove(value.IndexOf('\0'));
+                        _UserName = value.Remove(value.IndexOf('\0'));
                     else
-                        m_UserName = value;
+                        _UserName = value;
                 }
                 else
-                    m_UserName = "";
+                    _UserName = "";
             }
         }
-
-
+        
+        /// <summary>
+        /// 卡號或指紋號
+        /// </summary>
         public string CardNum { get; set; }
+
+        /// <summary>
+        /// 0 indicates commonuser, 
+        /// 1 registrar, 
+        /// 2 administrator, 
+        /// 3 super administrator
+        /// </summary>
+        public int Privilege { get; set; }
+
+        /// <summary>
+        /// 是否啟用
+        /// </summary>
+        public bool Enable { get; set; }
 
         private string NunberToChar(int number)
         {

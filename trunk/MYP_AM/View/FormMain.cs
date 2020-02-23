@@ -44,6 +44,8 @@ namespace MYPAM
 
         private FormAttendance m_FormAtt = new FormAttendance();
 
+        private FormEmployeeSettings m_FormEmpSet = new FormEmployeeSettings();
+
         public FormMain()
         {
             InitializeComponent();
@@ -479,7 +481,7 @@ namespace MYPAM
                         DaoSQL.Instance.SetEmployees(UserInfo);
                     }
 
-                    //取得已讀取數量;//
+                    //取得已讀取過的考勤數量;//
                     int ReadIndex = DaoSQL.Instance.GetReadAttendanceNum(device.DeviceInfo.ID.ToInt());
 
                     //設備現有的考勤數量;//
@@ -490,7 +492,7 @@ namespace MYPAM
                         DaoSQL.Instance.ResetReadAttendanceNum(device.DeviceInfo.ID.ToInt());
                     }
 
-                    //讀取考勤資訊;//
+                    //讀取設備考勤資訊;//
                     List<DaoAttendance> AttInfo = device.LoadAttendance(ReadIndex);
                     if (AttInfo.Count > 0)
                     {
@@ -528,7 +530,7 @@ namespace MYPAM
 
             foreach (DaoAttendance att in attInfo)
             {
-                sw.Write(string.Format("{0}{1}{2}\n",
+                sw.Write(string.Format("{0}{1}{2}\r\n",
                                         string.Format("{0:000000}", att.UserID),
                                         att.RecordTime.ToString("yyyyMMddHHmm"),
                                         string.Format("{0:00}", att.Location)));
@@ -576,8 +578,10 @@ namespace MYPAM
 
         private void TsBtnEmployee_MouseUp(object sender, MouseEventArgs e)
         {
-            m_FormEmployees.Show();
-            m_FormEmployees.Select();
+            //m_FormEmployees.Show();
+            //m_FormEmployees.Select();
+            m_FormEmpSet.Setup(m_ConnectDevice);
+            m_FormEmpSet.ShowDialog();
         }
 
         private void TsbtnAttendance_MouseUp(object sender, MouseEventArgs e)

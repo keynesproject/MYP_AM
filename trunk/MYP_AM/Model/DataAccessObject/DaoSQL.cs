@@ -53,6 +53,15 @@ namespace MYPAM.Model.DataAccessObject
             return Msg;
         }
 
+        /// <summary>
+        /// 開啟ForeignKeys功能
+        /// </summary>
+        private void OpenForeignKeys()
+        {
+            string strSchema = "PRAGMA foreign_keys = ON; PRAGMA automatic_index=off;";
+            _SQL.ExecuteNonQuery(strSchema);
+        }
+
         private DaoErrMsg ConnectSQLite()
         {
             DaoErrMsg Err = new DaoErrMsg();
@@ -74,9 +83,12 @@ namespace MYPAM.Model.DataAccessObject
                 return Err;
             }
 
+            //第一次開啟DB時，要開啟ForeignKeys功能;//
+            OpenForeignKeys();
+
             return Err;
         }
-
+        
         /// <summary>
         /// 關閉資料庫連接
         /// </summary>
@@ -89,7 +101,37 @@ namespace MYPAM.Model.DataAccessObject
 
             _SQL = null;
         }
-               
+
+        internal bool GetRtbMachineEmployee(int machineID, int employeeID )
+        {
+            //先檢查此關係資料存不存在，不存在則建立，存在則回傳資料;//
+            string strSchema = string.Format("SELECT * FROM rtbMachineEmployee WHERE Employee={0} and Machine={1}", employeeID, machineID);
+
+            DataTable dt = GetDataTable(strSchema);
+
+            if(dt.Rows.Count > 0)
+                return dt.Rows[0]["Enable"].ToInt() > 0 ? true : false;
+
+            strSchema = string.Format("INSERT INTO rtbMachineEmployee(Machine, Employee) VALUES({0}, {1})", machineID, employeeID);
+            _SQL.ExecuteNonQuery(strSchema);
+
+            return true;
+        }
+
+        /// <summary>
+        /// 更新設備的人員啟用或禁用資訊
+        /// </summary>
+        /// <param name="employeeID"></param>
+        /// <param name="machineID"></param>
+        /// <param name="v"></param>
+        internal void UpdateRtbMachineEmployee(int employeeID, int machineID, bool enable)
+        {
+            string strSchema = string.Format("UPDATE rtbMachineEmployee SET [Enable]={0} WHERE Machine={1} AND Employee={2}", 
+                                             enable, machineID, employeeID);
+
+            _SQL.ExecuteNonQuery(strSchema);
+        }
+        
         /// <summary>
         /// 照SQL語法取得Table資料
         /// </summary>
@@ -196,6 +238,17 @@ namespace MYPAM.Model.DataAccessObject
         }
 
         /// <summary>
+        /// 刪除指定員工資料
+        /// </summary>
+        /// <param name="ID"></param>
+        internal DaoErrMsg DeleteEmployees(int ID)
+        {
+            string strSchema = string.Format("DELETE FROM tbEmployees WHERE ID={0}", ID);
+
+            return _SQL.ExecuteNonQuery(strSchema);
+        }
+
+        /// <summary>
         /// 啟用或關閉設備
         /// </summary>
         /// <param name="ID"></param>
@@ -224,14 +277,15 @@ namespace MYPAM.Model.DataAccessObject
             int Count = 0;
             foreach (DaoUserInfo Info in Employees)
             {
-                sbSchema.AppendFormat(@"INSERT OR REPLACE INTO tbEmployees(ID, UserID, Name, CardNum, RecordTime)
+                sbSchema.AppendFormat(@"INSERT OR REPLACE INTO tbEmployees(ID, UserID, Name, CardNum, Privilege, RecordTime)
                                         VALUES((select ID from tbEmployees where UserID = '{0}'),
                                            '{0}',
                                            '{1}',
                                            '{2}',
-                                           dateTime()
-                                        );",
-                                        Info.UserID, Info.Name, Info.CardNum);
+                                           {3},
+                                           dateTime());",
+                                        Info.UserID, Info.Name, Info.CardNum, Info.Privilege);
+                sbSchema.AppendLine();
                 Count++;
                 if (Count == 40)
                 {
@@ -246,6 +300,122 @@ namespace MYPAM.Model.DataAccessObject
 
             return Msg;
         }
+
+        /// <summary>
+        /// 檢查tbEmployees是否有存在此ID
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        internal bool CheckExistEmployeesID(int ID)
+        {
+            string strSchema = "SELECT count(*) FROM tbEmployees WHERE ID=" + ID;
+
+            string count = string.Empty;
+            _SQL.ExecuteScalar(strSchema, out count);
+
+            return count.ToInt() > 0 ? true : false;
+        }
+
+        /// <summary>
+        /// 檢查UserID是否存在
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        internal bool CheckExistUserID(string userID)
+        {
+            string strSchema = string.Format("SELECT count(*) FROM tbEmployees WHERE UserID='{0}'", userID);
+            
+            string count = string.Empty;
+            _SQL.ExecuteScalar(strSchema, out count);
+
+            return count.ToInt() > 0 ? true : false;
+        }        
+
+        /// <summary>
+        /// 檢查ID與UserID是否在同一列資料中
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        internal bool CheckEmployeesIdAndUserID(int id, string userID)
+        {
+            string strSchema = string.Format("SELECT count(*) FROM tbEmployees WHERE ID={0} AND UserID='{1}'", id, userID);
+
+            string count = string.Empty;
+            _SQL.ExecuteScalar(strSchema, out count);
+
+            return count.ToInt() > 0 ? true : false;
+        }
+
+        /// <summary>
+        /// 設定員工資訊INSERT OR REPLACE
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="name"></param>
+        /// <param name="cardNum"></param>
+        /// <param name="privilege"></param>
+        /// <returns></returns>
+        internal DaoErrMsg SetEmployee(string userID, string name, string cardNum, int privilege)
+        {
+            string strSchema = string.Format(@"INSERT OR REPLACE INTO tbEmployees(ID, UserID, Name, CardNum, Privilege, RecordTime)
+                                               VALUES((select ID from tbEmployees where UserID = '{0}'),
+                                                  '{0}',
+                                                  '{1}',
+                                                  '{2}',
+                                                  {3},
+                                                  dateTime());",
+                                                  userID, name, cardNum, privilege);
+
+            return _SQL.ExecuteNonQuery(strSchema);
+        }
+
+        /// <summary>
+        /// 更新員工資訊
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="userID"></param>
+        /// <param name="name"></param>
+        /// <param name="cardNum"></param>
+        /// <param name="privilege"></param>
+        internal void UpdateEmployee(int ID, string userID, string name, string cardNum, int privilege)
+        {
+            //string strSchema = string.Format(@"UPDATE tbMachine SET[ReadIndex]=0 WHERE[ID] = '{0}';", DeviceID);
+            string strSchema = string.Format(@"UPDATE tbEmployees SET [UserID]='{1}', [Name]='{2}', [CardNum]='{3}', [Privilege]={4} WHERE ID={0};",
+                                               ID, userID, name, cardNum, privilege);
+
+            _SQL.ExecuteNonQuery(strSchema);
+        }
+
+        /// <summary>
+        /// 新增一筆員工資訊
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="name"></param>
+        /// <param name="cardNum"></param>
+        /// <param name="privilege"></param>
+        /// <returns></returns>
+        internal DaoErrMsg InsertEmployee(string userID, string name, string cardNum, int privilege)
+        {
+            string strSchema = string.Format(@"INSERT INTO tbEmployees( UserID, Name, CardNum, Privilege, RecordTime)
+                                               VALUES('{0}', '{1}', '{2}', {3}, dateTime());",
+                                               userID, name, cardNum, privilege);
+
+            return _SQL.ExecuteNonQuery(strSchema);
+        }
+
+        /// <summary>
+        /// 新增一筆員工資訊
+        /// </summary>
+        /// <returns>序號</returns>
+        internal DataTable NewEmployee()
+        {
+            string strSchema = @"INSERT INTO tbEmployees( UserID, Name, CardNum, RecordTime)
+                                                  VALUES('', '', '0000000000', dateTime());
+                                 SELECT * FROM tbEmployees WHERE ID=(SELECT MAX(ID) FROM tbEmployees);";
+
+            return GetDataTable(strSchema);
+        }
+
 
         /// <summary>
         /// 取得總員工數
@@ -270,28 +440,47 @@ namespace MYPAM.Model.DataAccessObject
             string strSchema;
             if (FromNo >= 0 && EndNo >= 0)
             {
-                strSchema = string.Format(@"SELECT --[ID] as '序號',
+                strSchema = string.Format(@"SELECT [ID] as '序號',
 		                                           [UserID] as '員工編號',
 		                                           [Name] as '姓名',
 		                                           [CardNum] as '卡號',
+                                                   [Privilege] as '權限',
+                                                   [Enable],
 		                                           [RecordTime] as '建立時間' 
                                             FROM [tbEmployees]
-                                            limit {0}, {1}",
+                                            limit {0}, {1};",
                                             FromNo, EndNo);
             }
             else
             {
-                strSchema = @"SELECT --[ID] as '序號',
+                strSchema = @"SELECT [ID] as '序號',
                                      [UserID] as '員工編號',
                                      [Name] as '姓名',
                                      [CardNum] as '卡號',
+                                     [Privilege] as '權限',
+                                     [Enable],
                                      [RecordTime] as '建立時間'
                               FROM [tbEmployees];";
             }
 
             return GetDataTable(strSchema);
         }
-        
+
+        internal DataTable GetAllEmployees()
+        {
+            string strSchema = "SELECT ID, CASt(UserID as int) as UserID, Name, CardNum, Privilege, Enable, RecordTime FROM tbEmployees";
+            return GetDataTable(strSchema);
+        }
+
+        internal DataTable GetEmployee(int ID)
+        {
+            string strSchem = string.Format(@"SELECT [UserID], [Name], [CardNum], [Privilege]
+                                              FROM tbEmployees
+                                              WHERE ID = {0};", ID);
+
+            return GetDataTable(strSchem);
+        }
+
         /// <summary>
         /// 取得目前已讀取的考勤數量
         /// </summary>
@@ -313,7 +502,7 @@ namespace MYPAM.Model.DataAccessObject
         /// <param name="DeviceID"></param>
         internal void ResetReadAttendanceNum(int DeviceID)
         {
-            string strSchema = string.Format(@"UPDATE tbMachine SET[ReadIndex]=0 WHERE[ID] = '{0}';", DeviceID);
+            string strSchema = string.Format(@"UPDATE tbMachine SET [ReadIndex]=0 WHERE[ID] = '{0}';", DeviceID);
 
             _SQL.ExecuteNonQuery(strSchema);
         }
@@ -338,7 +527,7 @@ namespace MYPAM.Model.DataAccessObject
                                                             Info.UserID,
                                                             Info.RecordTime.ToString("yyyy-MM-dd HH:mm:ss"),
                                                             Info.Location);
-
+                sbSchema.AppendLine();
                 Count++;
                 if (Count == 40)
                 {

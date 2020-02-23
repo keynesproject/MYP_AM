@@ -93,6 +93,16 @@ namespace MYPAM.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
+        internal static System.Drawing.Bitmap IconCross {
+            get {
+                object obj = ResourceManager.GetObject("IconCross", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
         internal static System.Drawing.Bitmap IconDatabase {
             get {
                 object obj = ResourceManager.GetObject("IconDatabase", resourceCulture);
@@ -196,6 +206,16 @@ namespace MYPAM.Properties {
         internal static System.Drawing.Bitmap IconStop {
             get {
                 object obj = ResourceManager.GetObject("IconStop", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap IconUpload {
+            get {
+                object obj = ResourceManager.GetObject("IconUpload", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
