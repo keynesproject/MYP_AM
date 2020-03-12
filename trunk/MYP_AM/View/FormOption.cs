@@ -1,4 +1,6 @@
 ﻿using MYPAM.Model.DataAccessObject;
+using MYPAM.Model.Extension;
+using MYPAM.View.Component;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,6 +20,7 @@ namespace MYPAM.View
             InitializeComponent();
 
             //讀取預設值;//
+            nudUpdateTick.Value = Properties.Settings.Default.UpdateAttTimeTickMinute;
             nudMorningHour.Value = Properties.Settings.Default.DataUpdateMorning.Hour;
             nudMorningMinute.Value = Properties.Settings.Default.DataUpdateMorning.Minute;
             nudAfternoonHour.Value = Properties.Settings.Default.DataUpdateAfternoon.Hour;
@@ -26,8 +29,35 @@ namespace MYPAM.View
             tbPath.Text = DaoConfigFile.Instance.DirAttExport;
         }
 
+        private bool CheckControl(Control Com, Label Lbl)
+        {
+            if (string.IsNullOrEmpty(Com.Text))
+            {
+                MessageBoxEx.Show(this, string.Format("{0} 欄位不可為空白.", Lbl.Text), "訊息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Com.Focus();
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool CheckField()
+        {
+            if (CheckControl(tbPath, lblPath) == false)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         private void BtnOK_Click(object sender, EventArgs e)
         {
+            if (CheckField() == false)
+                return;
+
+            Properties.Settings.Default.UpdateAttTimeTickMinute = nudUpdateTick.Value.ToInt();
+
             string dateToday = DateTime.Now.ToString("yyyy-MM-dd ");
             Properties.Settings.Default.DataUpdateMorning = DateTime.Parse( string.Format("{0} {1:00}:{2:00}:00",
                 dateToday,

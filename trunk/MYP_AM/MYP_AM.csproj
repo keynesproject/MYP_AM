@@ -202,6 +202,12 @@
     <Compile Include="View\FormOption.Designer.cs">
       <DependentUpon>FormOption.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\FormOutputFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FormOutputFile.Designer.cs">
+      <DependentUpon>FormOutputFile.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Model\MutiLanguage\LanguageEN.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>LanguageEN.Designer.cs</LastGenOutput>
@@ -255,6 +261,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\FormOption.resx">
       <DependentUpon>FormOption.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\FormOutputFile.resx">
+      <DependentUpon>FormOutputFile.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="packages.config" />

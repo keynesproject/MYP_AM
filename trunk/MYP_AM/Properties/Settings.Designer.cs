@@ -82,5 +82,17 @@ namespace MYPAM.Properties {
                 this["ExportAttPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public int UpdateAttTimeTickMinute {
+            get {
+                return ((int)(this["UpdateAttTimeTickMinute"]));
+            }
+            set {
+                this["UpdateAttTimeTickMinute"] = value;
+            }
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace MYPAM.View
 {
-    partial class FormFingerPrint
+    partial class FormTimeClock
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormFingerPrint));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormTimeClock));
             this.tlpSetting = new System.Windows.Forms.TableLayoutPanel();
             this.lblName = new System.Windows.Forms.Label();
             this.lblMachineNo = new System.Windows.Forms.Label();
@@ -52,6 +52,8 @@
             this.cbEnable = new System.Windows.Forms.ComboBox();
             this.lblLocation = new System.Windows.Forms.Label();
             this.tbLocation = new System.Windows.Forms.TextBox();
+            this.lblType = new System.Windows.Forms.Label();
+            this.cbType = new System.Windows.Forms.ComboBox();
             this.tlpSetting.SuspendLayout();
             this.tlpButton.SuspendLayout();
             this.tlpAckServerIP.SuspendLayout();
@@ -71,18 +73,21 @@
             this.tlpSetting.Controls.Add(this.tbName, 2, 1);
             this.tlpSetting.Controls.Add(this.tbMachineNo, 2, 3);
             this.tlpSetting.Controls.Add(this.tbPort, 2, 5);
-            this.tlpSetting.Controls.Add(this.tlpButton, 2, 7);
+            this.tlpSetting.Controls.Add(this.tlpButton, 2, 8);
             this.tlpSetting.Controls.Add(this.tlpAckServerIP, 2, 4);
             this.tlpSetting.Controls.Add(this.lblEnable, 1, 6);
             this.tlpSetting.Controls.Add(this.cbEnable, 2, 6);
             this.tlpSetting.Controls.Add(this.lblLocation, 1, 2);
             this.tlpSetting.Controls.Add(this.tbLocation, 2, 2);
+            this.tlpSetting.Controls.Add(this.lblType, 1, 7);
+            this.tlpSetting.Controls.Add(this.cbType, 2, 7);
             this.tlpSetting.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpSetting.Location = new System.Drawing.Point(0, 0);
             this.tlpSetting.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tlpSetting.Name = "tlpSetting";
-            this.tlpSetting.RowCount = 8;
+            this.tlpSetting.RowCount = 9;
             this.tlpSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 12F));
+            this.tlpSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -201,22 +206,22 @@
             this.tlpButton.Controls.Add(this.btnNew, 1, 0);
             this.tlpButton.Controls.Add(this.btnExit, 2, 0);
             this.tlpButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpButton.Location = new System.Drawing.Point(85, 213);
+            this.tlpButton.Location = new System.Drawing.Point(85, 242);
             this.tlpButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tlpButton.Name = "tlpButton";
             this.tlpButton.RowCount = 1;
             this.tlpButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpButton.Size = new System.Drawing.Size(315, 77);
+            this.tlpButton.Size = new System.Drawing.Size(315, 48);
             this.tlpButton.TabIndex = 6;
             // 
             // btnNew
             // 
             this.btnNew.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnNew.Font = new System.Drawing.Font("微軟正黑體", 10F);
-            this.btnNew.Location = new System.Drawing.Point(117, 12);
-            this.btnNew.Margin = new System.Windows.Forms.Padding(12);
+            this.btnNew.Location = new System.Drawing.Point(111, 6);
+            this.btnNew.Margin = new System.Windows.Forms.Padding(6);
             this.btnNew.Name = "btnNew";
-            this.btnNew.Size = new System.Drawing.Size(81, 53);
+            this.btnNew.Size = new System.Drawing.Size(93, 36);
             this.btnNew.TabIndex = 0;
             this.btnNew.Text = "新增";
             this.btnNew.UseVisualStyleBackColor = true;
@@ -226,10 +231,10 @@
             // 
             this.btnExit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnExit.Font = new System.Drawing.Font("微軟正黑體", 10F);
-            this.btnExit.Location = new System.Drawing.Point(222, 12);
-            this.btnExit.Margin = new System.Windows.Forms.Padding(12);
+            this.btnExit.Location = new System.Drawing.Point(216, 6);
+            this.btnExit.Margin = new System.Windows.Forms.Padding(6);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(81, 53);
+            this.btnExit.Size = new System.Drawing.Size(93, 36);
             this.btnExit.TabIndex = 1;
             this.btnExit.Text = "取消";
             this.btnExit.UseVisualStyleBackColor = true;
@@ -415,12 +420,38 @@
             this.tbLocation.Font = new System.Drawing.Font("微軟正黑體", 10F);
             this.tbLocation.Location = new System.Drawing.Point(85, 49);
             this.tbLocation.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tbLocation.MaxLength = 2;
+            this.tbLocation.MaxLength = 128;
             this.tbLocation.Name = "tbLocation";
             this.tbLocation.Size = new System.Drawing.Size(315, 25);
             this.tbLocation.TabIndex = 1;
             // 
-            // FormFingerPrint
+            // lblType
+            // 
+            this.lblType.AutoSize = true;
+            this.lblType.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblType.Font = new System.Drawing.Font("微軟正黑體", 10F);
+            this.lblType.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblType.Location = new System.Drawing.Point(15, 209);
+            this.lblType.Name = "lblType";
+            this.lblType.Size = new System.Drawing.Size(64, 29);
+            this.lblType.TabIndex = 7;
+            this.lblType.Text = "設備樣式";
+            this.lblType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // cbType
+            // 
+            this.cbType.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbType.FormattingEnabled = true;
+            this.cbType.Items.AddRange(new object[] {
+            "舊",
+            "新"});
+            this.cbType.Location = new System.Drawing.Point(85, 212);
+            this.cbType.Name = "cbType";
+            this.cbType.Size = new System.Drawing.Size(86, 23);
+            this.cbType.TabIndex = 6;
+            // 
+            // FormTimeClock
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(415, 294);
@@ -432,7 +463,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "FormFingerPrint";
+            this.Name = "FormTimeClock";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "新增設備設定";
             this.tlpSetting.ResumeLayout(false);
@@ -469,5 +500,7 @@
         private System.Windows.Forms.ComboBox cbEnable;
         private System.Windows.Forms.Label lblLocation;
         private System.Windows.Forms.TextBox tbLocation;
+        private System.Windows.Forms.Label lblType;
+        private System.Windows.Forms.ComboBox cbType;
     }
 }

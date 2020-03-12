@@ -46,6 +46,10 @@
             this.lblPath = new System.Windows.Forms.Label();
             this.tbPath = new System.Windows.Forms.TextBox();
             this.btnSearchBackup = new System.Windows.Forms.Button();
+            this.lblTickTime = new System.Windows.Forms.Label();
+            this.tlpTickTime = new System.Windows.Forms.TableLayoutPanel();
+            this.nudUpdateTick = new System.Windows.Forms.NumericUpDown();
+            this.lblTickTimeInfo = new System.Windows.Forms.Label();
             this.tlpButton.SuspendLayout();
             this.tlpSetting.SuspendLayout();
             this.tlpMorning.SuspendLayout();
@@ -54,6 +58,8 @@
             this.tlpAfternoon.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudAfternoonHour)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudAfternoonMinute)).BeginInit();
+            this.tlpTickTime.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudUpdateTick)).BeginInit();
             this.SuspendLayout();
             // 
             // tlpButton
@@ -65,22 +71,22 @@
             this.tlpButton.Controls.Add(this.btnOK, 1, 0);
             this.tlpButton.Controls.Add(this.btnExit, 2, 0);
             this.tlpButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpButton.Location = new System.Drawing.Point(155, 135);
+            this.tlpButton.Location = new System.Drawing.Point(141, 174);
             this.tlpButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tlpButton.Name = "tlpButton";
             this.tlpButton.RowCount = 1;
             this.tlpButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpButton.Size = new System.Drawing.Size(297, 57);
+            this.tlpButton.Size = new System.Drawing.Size(311, 58);
             this.tlpButton.TabIndex = 5;
             // 
             // btnOK
             // 
             this.btnOK.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnOK.Font = new System.Drawing.Font("微軟正黑體", 10F);
-            this.btnOK.Location = new System.Drawing.Point(121, 3);
+            this.btnOK.Location = new System.Drawing.Point(127, 3);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(83, 51);
-            this.btnOK.TabIndex = 0;
+            this.btnOK.Size = new System.Drawing.Size(87, 52);
+            this.btnOK.TabIndex = 8;
             this.btnOK.Text = "儲存";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.BtnOK_Click);
@@ -89,10 +95,10 @@
             // 
             this.btnExit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnExit.Font = new System.Drawing.Font("微軟正黑體", 10F);
-            this.btnExit.Location = new System.Drawing.Point(210, 3);
+            this.btnExit.Location = new System.Drawing.Point(220, 3);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(84, 51);
-            this.btnExit.TabIndex = 1;
+            this.btnExit.Size = new System.Drawing.Size(88, 52);
+            this.btnExit.TabIndex = 9;
             this.btnExit.Text = "取消";
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.BtnExit_Click);
@@ -103,11 +109,11 @@
             this.lblAfternoon.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblAfternoon.Font = new System.Drawing.Font("微軟正黑體", 10F);
             this.lblAfternoon.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblAfternoon.Location = new System.Drawing.Point(15, 59);
+            this.lblAfternoon.Location = new System.Drawing.Point(15, 98);
             this.lblAfternoon.Name = "lblAfternoon";
-            this.lblAfternoon.Size = new System.Drawing.Size(134, 39);
+            this.lblAfternoon.Size = new System.Drawing.Size(120, 39);
             this.lblAfternoon.TabIndex = 3;
-            this.lblAfternoon.Text = "下午固定更新時段 :";
+            this.lblAfternoon.Text = "下午固定更新時段";
             this.lblAfternoon.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblMorning
@@ -116,11 +122,11 @@
             this.lblMorning.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblMorning.Font = new System.Drawing.Font("微軟正黑體", 10F);
             this.lblMorning.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblMorning.Location = new System.Drawing.Point(15, 20);
+            this.lblMorning.Location = new System.Drawing.Point(15, 59);
             this.lblMorning.Name = "lblMorning";
-            this.lblMorning.Size = new System.Drawing.Size(134, 39);
+            this.lblMorning.Size = new System.Drawing.Size(120, 39);
             this.lblMorning.TabIndex = 1;
-            this.lblMorning.Text = "上午固定更新時段 :";
+            this.lblMorning.Text = "上午固定更新時段";
             this.lblMorning.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // tlpSetting
@@ -130,25 +136,28 @@
             this.tlpSetting.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tlpSetting.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpSetting.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tlpSetting.Controls.Add(this.lblMorning, 1, 1);
-            this.tlpSetting.Controls.Add(this.lblAfternoon, 1, 2);
-            this.tlpSetting.Controls.Add(this.tlpButton, 2, 4);
-            this.tlpSetting.Controls.Add(this.tlpMorning, 2, 1);
-            this.tlpSetting.Controls.Add(this.tlpAfternoon, 2, 2);
-            this.tlpSetting.Controls.Add(this.lblPath, 1, 3);
-            this.tlpSetting.Controls.Add(this.tbPath, 2, 3);
-            this.tlpSetting.Controls.Add(this.btnSearchBackup, 3, 3);
+            this.tlpSetting.Controls.Add(this.lblMorning, 1, 2);
+            this.tlpSetting.Controls.Add(this.lblAfternoon, 1, 3);
+            this.tlpSetting.Controls.Add(this.tlpButton, 2, 5);
+            this.tlpSetting.Controls.Add(this.tlpMorning, 2, 2);
+            this.tlpSetting.Controls.Add(this.tlpAfternoon, 2, 3);
+            this.tlpSetting.Controls.Add(this.lblPath, 1, 4);
+            this.tlpSetting.Controls.Add(this.tbPath, 2, 4);
+            this.tlpSetting.Controls.Add(this.btnSearchBackup, 3, 4);
+            this.tlpSetting.Controls.Add(this.lblTickTime, 1, 1);
+            this.tlpSetting.Controls.Add(this.tlpTickTime, 2, 1);
             this.tlpSetting.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpSetting.Location = new System.Drawing.Point(0, 0);
             this.tlpSetting.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tlpSetting.Name = "tlpSetting";
-            this.tlpSetting.RowCount = 5;
+            this.tlpSetting.RowCount = 6;
             this.tlpSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlpSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpSetting.Size = new System.Drawing.Size(487, 196);
+            this.tlpSetting.Size = new System.Drawing.Size(487, 236);
             this.tlpSetting.TabIndex = 1;
             // 
             // tlpMorning
@@ -163,11 +172,11 @@
             this.tlpMorning.Controls.Add(this.nudMorningMinute, 2, 0);
             this.tlpMorning.Controls.Add(this.lblMorningDot, 1, 0);
             this.tlpMorning.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpMorning.Location = new System.Drawing.Point(155, 23);
+            this.tlpMorning.Location = new System.Drawing.Point(141, 62);
             this.tlpMorning.Name = "tlpMorning";
             this.tlpMorning.RowCount = 1;
             this.tlpMorning.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpMorning.Size = new System.Drawing.Size(297, 33);
+            this.tlpMorning.Size = new System.Drawing.Size(311, 33);
             this.tlpMorning.TabIndex = 8;
             // 
             // nudMorningHour
@@ -182,8 +191,8 @@
             0,
             0});
             this.nudMorningHour.Name = "nudMorningHour";
-            this.nudMorningHour.Size = new System.Drawing.Size(132, 23);
-            this.nudMorningHour.TabIndex = 7;
+            this.nudMorningHour.Size = new System.Drawing.Size(139, 23);
+            this.nudMorningHour.TabIndex = 2;
             this.nudMorningHour.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nudMorningHour.Value = new decimal(new int[] {
             10,
@@ -195,7 +204,7 @@
             // 
             this.nudMorningMinute.Dock = System.Windows.Forms.DockStyle.Fill;
             this.nudMorningMinute.Font = new System.Drawing.Font("Arial", 10F);
-            this.nudMorningMinute.Location = new System.Drawing.Point(161, 5);
+            this.nudMorningMinute.Location = new System.Drawing.Point(168, 5);
             this.nudMorningMinute.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.nudMorningMinute.Maximum = new decimal(new int[] {
             59,
@@ -203,8 +212,8 @@
             0,
             0});
             this.nudMorningMinute.Name = "nudMorningMinute";
-            this.nudMorningMinute.Size = new System.Drawing.Size(133, 23);
-            this.nudMorningMinute.TabIndex = 8;
+            this.nudMorningMinute.Size = new System.Drawing.Size(140, 23);
+            this.nudMorningMinute.TabIndex = 3;
             this.nudMorningMinute.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nudMorningMinute.Value = new decimal(new int[] {
             30,
@@ -217,7 +226,7 @@
             this.lblMorningDot.AutoSize = true;
             this.lblMorningDot.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblMorningDot.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMorningDot.Location = new System.Drawing.Point(141, 0);
+            this.lblMorningDot.Location = new System.Drawing.Point(148, 0);
             this.lblMorningDot.Name = "lblMorningDot";
             this.lblMorningDot.Size = new System.Drawing.Size(14, 33);
             this.lblMorningDot.TabIndex = 9;
@@ -236,11 +245,11 @@
             this.tlpAfternoon.Controls.Add(this.nudAfternoonMinute, 2, 0);
             this.tlpAfternoon.Controls.Add(this.lblAfternoonDot, 1, 0);
             this.tlpAfternoon.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpAfternoon.Location = new System.Drawing.Point(155, 62);
+            this.tlpAfternoon.Location = new System.Drawing.Point(141, 101);
             this.tlpAfternoon.Name = "tlpAfternoon";
             this.tlpAfternoon.RowCount = 1;
             this.tlpAfternoon.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpAfternoon.Size = new System.Drawing.Size(297, 33);
+            this.tlpAfternoon.Size = new System.Drawing.Size(311, 33);
             this.tlpAfternoon.TabIndex = 9;
             // 
             // nudAfternoonHour
@@ -260,8 +269,8 @@
             0,
             0});
             this.nudAfternoonHour.Name = "nudAfternoonHour";
-            this.nudAfternoonHour.Size = new System.Drawing.Size(132, 23);
-            this.nudAfternoonHour.TabIndex = 7;
+            this.nudAfternoonHour.Size = new System.Drawing.Size(139, 23);
+            this.nudAfternoonHour.TabIndex = 4;
             this.nudAfternoonHour.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nudAfternoonHour.Value = new decimal(new int[] {
             19,
@@ -273,7 +282,7 @@
             // 
             this.nudAfternoonMinute.Dock = System.Windows.Forms.DockStyle.Fill;
             this.nudAfternoonMinute.Font = new System.Drawing.Font("Arial", 10F);
-            this.nudAfternoonMinute.Location = new System.Drawing.Point(161, 5);
+            this.nudAfternoonMinute.Location = new System.Drawing.Point(168, 5);
             this.nudAfternoonMinute.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.nudAfternoonMinute.Maximum = new decimal(new int[] {
             59,
@@ -281,8 +290,8 @@
             0,
             0});
             this.nudAfternoonMinute.Name = "nudAfternoonMinute";
-            this.nudAfternoonMinute.Size = new System.Drawing.Size(133, 23);
-            this.nudAfternoonMinute.TabIndex = 8;
+            this.nudAfternoonMinute.Size = new System.Drawing.Size(140, 23);
+            this.nudAfternoonMinute.TabIndex = 5;
             this.nudAfternoonMinute.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nudAfternoonMinute.Value = new decimal(new int[] {
             30,
@@ -295,7 +304,7 @@
             this.lblAfternoonDot.AutoSize = true;
             this.lblAfternoonDot.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblAfternoonDot.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAfternoonDot.Location = new System.Drawing.Point(141, 0);
+            this.lblAfternoonDot.Location = new System.Drawing.Point(148, 0);
             this.lblAfternoonDot.Name = "lblAfternoonDot";
             this.lblAfternoonDot.Size = new System.Drawing.Size(14, 33);
             this.lblAfternoonDot.TabIndex = 9;
@@ -308,41 +317,110 @@
             this.lblPath.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblPath.Font = new System.Drawing.Font("微軟正黑體", 10F);
             this.lblPath.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblPath.Location = new System.Drawing.Point(15, 98);
+            this.lblPath.Location = new System.Drawing.Point(15, 137);
             this.lblPath.Name = "lblPath";
-            this.lblPath.Size = new System.Drawing.Size(134, 33);
+            this.lblPath.Size = new System.Drawing.Size(120, 33);
             this.lblPath.TabIndex = 10;
-            this.lblPath.Text = "考勤檔案輸出路徑：";
+            this.lblPath.Text = "考勤檔案輸出路徑";
             this.lblPath.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // tbPath
             // 
             this.tbPath.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbPath.Font = new System.Drawing.Font("Arial", 9F);
-            this.tbPath.Location = new System.Drawing.Point(155, 105);
+            this.tbPath.Location = new System.Drawing.Point(141, 144);
             this.tbPath.Margin = new System.Windows.Forms.Padding(3, 7, 3, 3);
             this.tbPath.MaxLength = 512;
             this.tbPath.Name = "tbPath";
-            this.tbPath.Size = new System.Drawing.Size(297, 21);
-            this.tbPath.TabIndex = 11;
+            this.tbPath.Size = new System.Drawing.Size(311, 21);
+            this.tbPath.TabIndex = 6;
             // 
             // btnSearchBackup
             // 
             this.btnSearchBackup.AutoSize = true;
             this.btnSearchBackup.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnSearchBackup.Location = new System.Drawing.Point(458, 102);
+            this.btnSearchBackup.Location = new System.Drawing.Point(458, 141);
             this.btnSearchBackup.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnSearchBackup.Name = "btnSearchBackup";
             this.btnSearchBackup.Size = new System.Drawing.Size(26, 25);
-            this.btnSearchBackup.TabIndex = 12;
+            this.btnSearchBackup.TabIndex = 7;
             this.btnSearchBackup.Text = "...";
             this.btnSearchBackup.UseVisualStyleBackColor = true;
             this.btnSearchBackup.Click += new System.EventHandler(this.BtnSearchBackup_Click);
             // 
+            // lblTickTime
+            // 
+            this.lblTickTime.AutoSize = true;
+            this.lblTickTime.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblTickTime.Font = new System.Drawing.Font("微軟正黑體", 10F);
+            this.lblTickTime.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblTickTime.Location = new System.Drawing.Point(15, 20);
+            this.lblTickTime.Name = "lblTickTime";
+            this.lblTickTime.Size = new System.Drawing.Size(120, 39);
+            this.lblTickTime.TabIndex = 13;
+            this.lblTickTime.Text = "更新考勤間隔時間";
+            this.lblTickTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tlpTickTime
+            // 
+            this.tlpTickTime.AutoSize = true;
+            this.tlpTickTime.ColumnCount = 3;
+            this.tlpTickTime.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpTickTime.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpTickTime.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpTickTime.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpTickTime.Controls.Add(this.nudUpdateTick, 0, 0);
+            this.tlpTickTime.Controls.Add(this.lblTickTimeInfo, 2, 0);
+            this.tlpTickTime.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpTickTime.Location = new System.Drawing.Point(141, 23);
+            this.tlpTickTime.Name = "tlpTickTime";
+            this.tlpTickTime.RowCount = 1;
+            this.tlpTickTime.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpTickTime.Size = new System.Drawing.Size(311, 33);
+            this.tlpTickTime.TabIndex = 14;
+            // 
+            // nudUpdateTick
+            // 
+            this.nudUpdateTick.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.nudUpdateTick.Font = new System.Drawing.Font("Arial", 10F);
+            this.nudUpdateTick.Location = new System.Drawing.Point(3, 5);
+            this.nudUpdateTick.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.nudUpdateTick.Maximum = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
+            this.nudUpdateTick.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudUpdateTick.Name = "nudUpdateTick";
+            this.nudUpdateTick.Size = new System.Drawing.Size(139, 23);
+            this.nudUpdateTick.TabIndex = 1;
+            this.nudUpdateTick.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nudUpdateTick.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
+            // lblTickTimeInfo
+            // 
+            this.lblTickTimeInfo.AutoSize = true;
+            this.lblTickTimeInfo.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblTickTimeInfo.Font = new System.Drawing.Font("微軟正黑體", 10F);
+            this.lblTickTimeInfo.Location = new System.Drawing.Point(168, 0);
+            this.lblTickTimeInfo.Name = "lblTickTimeInfo";
+            this.lblTickTimeInfo.Size = new System.Drawing.Size(82, 33);
+            this.lblTickTimeInfo.TabIndex = 10;
+            this.lblTickTimeInfo.Text = "分鐘 (1~60)";
+            this.lblTickTimeInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // FormOption
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(487, 196);
+            this.ClientSize = new System.Drawing.Size(487, 236);
             this.Controls.Add(this.tlpSetting);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Arial", 9F);
@@ -365,6 +443,9 @@
             this.tlpAfternoon.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudAfternoonHour)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudAfternoonMinute)).EndInit();
+            this.tlpTickTime.ResumeLayout(false);
+            this.tlpTickTime.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudUpdateTick)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -388,5 +469,9 @@
         private System.Windows.Forms.Label lblPath;
         private System.Windows.Forms.TextBox tbPath;
         private System.Windows.Forms.Button btnSearchBackup;
+        private System.Windows.Forms.Label lblTickTime;
+        private System.Windows.Forms.TableLayoutPanel tlpTickTime;
+        private System.Windows.Forms.NumericUpDown nudUpdateTick;
+        private System.Windows.Forms.Label lblTickTimeInfo;
     }
 }

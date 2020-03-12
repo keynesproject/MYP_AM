@@ -12,13 +12,44 @@ using System.Windows.Forms;
 
 namespace MYPAM.View
 {
-    public partial class FormFingerPrint : Form
+    public partial class FormTimeClock : Form
     {
-        public FormFingerPrint()
+        private int m_ID = 0;
+
+        public FormTimeClock()
         {
             InitializeComponent();
 
             cbEnable.SelectedIndex = 0;
+            cbType.SelectedIndex = 0;
+        }
+
+        public void LoadDevice(int ID)
+        {
+            //讀取設備資訊;//
+            List<DaoTimeClock> TimeClock = DaoSQL.Instance.GetMachineInfo(ID);
+
+            if (TimeClock.Count <= 0)
+                return;
+
+            m_ID = ID;
+
+            DaoTimeClock tc = TimeClock[0];
+
+            tbName.Text = tc.Name;
+            tbLocation.Text = tc.Location;
+            tbMachineNo.Text = tc.MachineNo.ToString();
+            string[] strIP = tc.IP.Split('.');
+            tbIP1.Text = strIP[0];
+            tbIP2.Text = strIP[1];
+            tbIP3.Text = strIP[2];
+            tbIP4.Text = strIP[3];
+            tbPort.Text = tc.Port.ToString();            
+            cbEnable.SelectedIndex = tc.Enable == true ? 0 : 1;
+            cbType.SelectedIndex = tc.Type == 0 ? 0 : 1;
+
+            this.Text = "編輯設備設定";
+            btnNew.Text = "儲存";
         }
 
         /// <summary>
@@ -28,18 +59,87 @@ namespace MYPAM.View
         /// <param name="e"></param>
         private void BtnNew_Click(object sender, EventArgs e)
         {
+            //檢查欄位是否為空;//
+            if (CheckField() == false)
+                return;
+
+
+            if (m_ID == 0)
+                NewDevice();
+            else
+                SaveDevice();
+        }
+
+        private bool CheckControl(Control Com, Label Lbl)
+        {
+            if (string.IsNullOrEmpty(Com.Text))
+            {
+                MessageBoxEx.Show(this, string.Format("{0} 欄位不可為空白.", Lbl.Text), "訊息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Com.Focus();
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool CheckField()
+        {
+            if (CheckControl(tbName, lblName) == false
+                || CheckControl(tbLocation, lblLocation) == false
+                || CheckControl(tbMachineNo, lblMachineNo) == false
+                || CheckControl(tbIP1, lblIP) == false
+                || CheckControl(tbIP2, lblIP) == false
+                || CheckControl(tbIP3, lblIP) == false
+                || CheckControl(tbIP4, lblIP) == false
+                || CheckControl(tbPort, lblPort) == false)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// 覆蓋現有設備資訊
+        /// </summary>
+        private void SaveDevice()
+        {
             string IP = string.Format("{0}.{1}.{2}.{3}", tbIP1.Text, tbIP2.Text, tbIP3.Text, tbIP4.Text);
             bool isEnable = cbEnable.SelectedIndex == 0 ? true : false;
+            int type = cbType.SelectedIndex;
+
+            DaoErrMsg Ret = DaoSQL.Instance.SaveMachine(m_ID, tbName.Text, tbLocation.Text.PadLeft(2, '0'), tbMachineNo.Text.ToInt(), IP, tbPort.Text.ToInt(), isEnable, type);
+
+            if (Ret.isError == false)
+            {
+                MessageBoxEx.Show(this, "儲存設備成功", "訊息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.DialogResult = System.Windows.Forms.DialogResult.Yes;
+                this.Close();
+            }
+            else
+            {
+                MessageBoxEx.Show(this, string.Format("儲存設備失敗\r\n{0}", Ret.ErrorMsg), "訊息", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// 新增設備
+        /// </summary>
+        private void NewDevice()
+        {
+            string IP = string.Format("{0}.{1}.{2}.{3}", tbIP1.Text, tbIP2.Text, tbIP3.Text, tbIP4.Text);
+            bool isEnable = cbEnable.SelectedIndex == 0 ? true : false;
+            int type = cbType.SelectedIndex;
 
             //先檢查此設定是否存在;//
-            if( DaoSQL.Instance.isExistMachine(IP, tbPort.Text.ToInt()) == true )
+            if (DaoSQL.Instance.isExistMachine(IP, tbPort.Text.ToInt()) == true)
             {
                 DialogResult BoxRet = MessageBoxEx.Show(this, string.Format("IP:{0} 端口:{1} 設定已存在.\r\n是否要覆蓋此設備資訊?", IP, tbPort.Text), "訊息", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (BoxRet != DialogResult.Yes)
                     return;
             }
 
-            DaoErrMsg Ret = DaoSQL.Instance.AddNewMachine(tbName.Text, tbLocation.Text.PadLeft(2, '0'), tbMachineNo.Text.ToInt(), IP, tbPort.Text.ToInt(), isEnable);
+            DaoErrMsg Ret = DaoSQL.Instance.AddNewMachine(tbName.Text, tbLocation.Text.PadLeft(2, '0'), tbMachineNo.Text.ToInt(), IP, tbPort.Text.ToInt(), isEnable, type);
 
             if (Ret.isError == false)
             {

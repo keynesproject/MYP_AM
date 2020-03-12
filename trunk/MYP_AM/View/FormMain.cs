@@ -111,6 +111,7 @@ namespace MYPAM
                         tsslState.Text = "";
                         //紀錄現在時間，並啟動定時更新資料計時器;//
                         dtMark = DateTime.Now;
+                        tGiveTime.Interval = Properties.Settings.Default.UpdateAttTimeTickMinute * 1000;
                         tGiveTime.Enabled = true;
                         break;
 
@@ -130,15 +131,15 @@ namespace MYPAM
         {
             int SelectIndex = dgvDevice.SelectedRows.Count <= 0 ? 0 : dgvDevice.SelectedRows[0].Index;
 
-            List<DaoFingerPrint> FingerPrint = DaoSQL.Instance.GetMachineInfo();
+            List<DaoTimeClock> TimeClock = DaoSQL.Instance.GetMachineInfo();
 
             m_ConnectDevice.Clear();
-            foreach(DaoFingerPrint daoFP in FingerPrint)
+            foreach(DaoTimeClock daoFP in TimeClock)
             {
                 m_ConnectDevice.Add(new MYP2000(daoFP));
             }
 
-            this.dgvDevice.DataSource = FingerPrint;
+            this.dgvDevice.DataSource = TimeClock;
 
             if (dgvDevice.SelectedRows.Count <= 0)
                 return;
@@ -233,15 +234,19 @@ namespace MYPAM
             if(Properties.Settings.Default.IsOpenMypSetting == true)
             {
                 tsmiMYP.Text = "關閉MYP設定";
+                tsmiOutFormat.Visible = true;
                 tsBtnAddDevice.Visible = true;
                 tsBtnRemoveDevice.Visible = true;
+                tsBtnEditDevice.Visible = true;
                 tsSeparator4.Visible = true;
             }
             else
             {
                 tsmiMYP.Text = "MYP設定";
+                tsmiOutFormat.Visible = false;
                 tsBtnAddDevice.Visible = false;
                 tsBtnRemoveDevice.Visible = false;
+                tsBtnEditDevice.Visible = false;
                 tsSeparator4.Visible = false;
             }
         }
@@ -253,8 +258,28 @@ namespace MYPAM
         /// <param name="e"></param>
         private void TsBtnAddDevice_MouseUp(object sender, MouseEventArgs e)
         {
-            FormFingerPrint FormFP = new FormFingerPrint();
-            if (FormFP.ShowDialog() == DialogResult.Yes)
+            FormTimeClock FormTC = new FormTimeClock();
+            if (FormTC.ShowDialog() == DialogResult.Yes)
+                ReadMachineInfo();
+        }
+
+        /// <summary>
+        /// 編輯設備按下事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TsBtnEditDevice_MouseUp(object sender, MouseEventArgs e)
+        {
+            //判斷是否有選擇設備;//
+            if (dgvDevice.SelectedRows.Count <= 0)
+            {
+                MessageBoxEx.Show(this, "請先選擇設備!", "訊息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            FormTimeClock FormTC = new FormTimeClock();
+            FormTC.LoadDevice(dgvDevice.SelectedRows[0].Cells["columnID"].Value.ToInt());
+            if (FormTC.ShowDialog() == DialogResult.Yes)
                 ReadMachineInfo();
         }
 
@@ -364,15 +389,15 @@ namespace MYPAM
             {
                 //若設備尚未連線，則進行連線;//
                 bool bLastConnectState = true;
-                if (device.DeviceInfo.Connect != DaoFingerPrint.eConnectState.eCON_CONNECTED)
+                if (device.DeviceInfo.Connect != DaoTimeClock.eConnectState.eCON_CONNECTED)
                 {
                     bLastConnectState = false;
                     device.Connect();
                 }
 
-                if (device.DeviceInfo.Connect == DaoFingerPrint.eConnectState.eCON_CONNECTED)
+                if (device.DeviceInfo.Connect == DaoTimeClock.eConnectState.eCON_CONNECTED)
                 {
-                    device.DeviceInfo.Connect = DaoFingerPrint.eConnectState.eCON_CLEAR_ATT;
+                    device.DeviceInfo.Connect = DaoTimeClock.eConnectState.eCON_CLEAR_ATT;
                     dgvDevice.Refresh();
                     if (device.DeleteAttendance() == true)
                         hadAttInfoDel = true;
@@ -380,7 +405,7 @@ namespace MYPAM
                     if (bLastConnectState == false)
                         device.Disconnect();
                     else
-                        device.DeviceInfo.Connect = DaoFingerPrint.eConnectState.eCON_CONNECTED;
+                        device.DeviceInfo.Connect = DaoTimeClock.eConnectState.eCON_CONNECTED;
 
                     dgvDevice.Refresh();
                 }
@@ -411,7 +436,7 @@ namespace MYPAM
             this.UiFunctionSetting(ProcessState.eSTART_DEVICE);
 
             //只要是重新連線的第一次都重新讀取設備資訊到資料庫;//
-            UpdateAttAnUser();
+            UpdateAttAndUser();
 
             this.Cursor = Cursors.Default;
         }
@@ -449,7 +474,7 @@ namespace MYPAM
                 return;
             }
 
-            UpdateAttAnUser();
+            UpdateAttAndUser();
 
             MessageBoxEx.Show(this, "員工及考勤資料更新完成!", "訊息", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -457,7 +482,7 @@ namespace MYPAM
         /// <summary>
         /// 更新考勤及使用者資訊
         /// </summary>
-        private void UpdateAttAnUser()
+        private void UpdateAttAndUser()
         {
             m_isLoading = true;
 
@@ -497,7 +522,7 @@ namespace MYPAM
                     if (AttInfo.Count > 0)
                     {
                         DaoSQL.Instance.SetAttendance(device.DeviceInfo.ID.ToInt(), AttInfo);
-                        ExportToTxt(AttInfo);
+                        ExportAttendanceToTxt(AttInfo);
                     }
 
                     //記錄現有考勤數量;//
@@ -519,7 +544,11 @@ namespace MYPAM
             m_isLoading = false;
         }
 
-        private void ExportToTxt(List<DaoAttendance> attInfo)
+        /// <summary>
+        /// 輸出考勤資訊到文字檔
+        /// </summary>
+        /// <param name="attInfo"></param>
+        private void ExportAttendanceToTxt(List<DaoAttendance> attInfo)
         {
             string FileName = DaoConfigFile.Instance.DirAttExport + "/";
 
@@ -562,7 +591,7 @@ namespace MYPAM
                 {
                     Thread.Sleep(1000);
                 }
-                UpdateAttAnUser();
+                UpdateAttAndUser();
             }
             else if(   DateTime.Now.Hour == Properties.Settings.Default.DataUpdateAfternoon.Hour
                     && DateTime.Now.Minute == Properties.Settings.Default.DataUpdateAfternoon.Minute)
@@ -572,7 +601,7 @@ namespace MYPAM
                 {
                     Thread.Sleep(1000);
                 }
-                UpdateAttAnUser();
+                UpdateAttAndUser();
             }
         }
 
@@ -601,5 +630,11 @@ namespace MYPAM
             About.ShowDialog();
         }
 
+        private void TsmiOutFormat_Click(object sender, EventArgs e)
+        {
+            FormOutputFile of = new FormOutputFile();
+            of.LoadDefault();
+            of.ShowDialog();
+        }
     }
 }

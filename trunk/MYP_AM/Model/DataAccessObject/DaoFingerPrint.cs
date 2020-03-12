@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MYPAM.Model.DataAccessObject
 {
-    public class DaoFingerPrint
+    public class DaoTimeClock
     {
         public enum eConnectState
         {
@@ -14,7 +14,7 @@ namespace MYPAM.Model.DataAccessObject
             eCON_UNABLE,
             eCON_CLEAR_ATT
         }
-
+        
         private string[] m_ConnectState = { "未連線", "已連線", "無法連線", "清除考勤資料" };
 
         /// <summary>
@@ -88,5 +88,11 @@ namespace MYPAM.Model.DataAccessObject
         /// 地點
         /// </summary>
         public string Location { get; set; }
+
+        /// <summary>
+        /// 新款或舊款設備，用於不同API呼叫方式，
+        /// 0:舊款，其餘:新款
+        /// </summary>
+        public int Type { get; set; }
     }
 }

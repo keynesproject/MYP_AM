@@ -21,14 +21,14 @@ namespace MYPAM.Model.Device
         /// <summary>
         /// 設備基本資訊
         /// </summary>
-        private DaoFingerPrint m_daoFP = new DaoFingerPrint();
+        private DaoTimeClock m_daoTC = new DaoTimeClock();
 
         /// <summary>
         /// 設備基本資訊
         /// </summary>
-        public DaoFingerPrint DeviceInfo
+        public DaoTimeClock DeviceInfo
         {
-            get { return m_daoFP; }
+            get { return m_daoTC; }
         }
 
         /// <summary>
@@ -36,23 +36,23 @@ namespace MYPAM.Model.Device
         /// </summary>
         public bool Enable
         {
-            get { return m_daoFP.Enable; }
-            set { m_daoFP.Enable = value; }
+            get { return m_daoTC.Enable; }
+            set { m_daoTC.Enable = value; }
         }
         
         public bool isConnected()
         {
-            return m_daoFP.Connect == DaoFingerPrint.eConnectState.eCON_CONNECTED ? true : false;
+            return m_daoTC.Connect == DaoTimeClock.eConnectState.eCON_CONNECTED ? true : false;
         }
 
         /// <summary>
         /// 建構式
         /// </summary>
-        /// <param name="daoFP"></param>
-        public MYP2000(DaoFingerPrint daoFP)
+        /// <param name="daoTC"></param>
+        public MYP2000(DaoTimeClock daoTC)
         {
-            m_daoFP = daoFP;
-            m_daoFP.MachineNo = 1;
+            m_daoTC = daoTC;
+            m_daoTC.MachineNo = 1;
         }
 
         /// <summary>
@@ -64,29 +64,29 @@ namespace MYPAM.Model.Device
             if (this.Enable == false)
                 return;
 
-            if (m_daoFP.IP.Trim() == "" || m_daoFP.Port.ToString().Trim() == "")
+            if (m_daoTC.IP.Trim() == "" || m_daoTC.Port.ToString().Trim() == "")
             {
                 //MessageBox.Show("IP及埠號不可以為空!", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                m_daoFP.Connect = DaoFingerPrint.eConnectState.eCON_UNABLE;
+                m_daoTC.Connect = DaoTimeClock.eConnectState.eCON_UNABLE;
                 return;
             }            
 
-            bool bIsConnected = _axCZKEM1.Connect_Net(m_daoFP.IP, m_daoFP.Port);
+            bool bIsConnected = _axCZKEM1.Connect_Net(m_daoTC.IP, m_daoTC.Port);
             if (bIsConnected == true)
             {
                 //Here you can register the realtime events that you want to be triggered(the parameters 65535 means registering all)
-                _axCZKEM1.RegEvent(m_daoFP.MachineNo, 65535);
+                _axCZKEM1.RegEvent(m_daoTC.MachineNo, 65535);
             }
             else
             {
                 int idwErrorCode = 0;
                 _axCZKEM1.GetLastError(ref idwErrorCode);
                 //MessageBox.Show(string.Format("無法連線至[{0}],錯誤代碼={1}", DeviceInfo.Name, idwErrorCode.ToString()), "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                m_daoFP.Connect = DaoFingerPrint.eConnectState.eCON_UNABLE;
+                m_daoTC.Connect = DaoTimeClock.eConnectState.eCON_UNABLE;
                 return;
             }
             
-            m_daoFP.Connect = DaoFingerPrint.eConnectState.eCON_CONNECTED;
+            m_daoTC.Connect = DaoTimeClock.eConnectState.eCON_CONNECTED;
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace MYPAM.Model.Device
         public void Disconnect()
         {
             _axCZKEM1.Disconnect();
-            this.DeviceInfo.Connect = DaoFingerPrint.eConnectState.eCON_DISCONNECT;
+            this.DeviceInfo.Connect = DaoTimeClock.eConnectState.eCON_DISCONNECT;
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace MYPAM.Model.Device
         public List<DaoUserInfo> LoadUserInfo()
         {
             //不處於連現狀態就不予處理;//
-            if (m_daoFP.Connect != DaoFingerPrint.eConnectState.eCON_CONNECTED)
+            if (m_daoTC.Connect != DaoTimeClock.eConnectState.eCON_CONNECTED)
                 return new List<DaoUserInfo>();
 
             int iEnrollNumber = 0;
@@ -116,38 +116,58 @@ namespace MYPAM.Model.Device
             bool bEnabled = false;
             string sCardNum = "";
 
-            _axCZKEM1.EnableDevice(m_daoFP.MachineNo, false);
+            _axCZKEM1.EnableDevice(m_daoTC.MachineNo, false);
             //read all the user information to the memory
-            _axCZKEM1.ReadAllUserID(m_daoFP.MachineNo);
-            _axCZKEM1.EnableDevice(m_daoFP.MachineNo, true);
+            _axCZKEM1.ReadAllUserID(m_daoTC.MachineNo);
+            _axCZKEM1.EnableDevice(m_daoTC.MachineNo, true);
 
             List<DaoUserInfo> lUserInfo = new List<DaoUserInfo>();
             //get all the users' information from the memory
-            while (_axCZKEM1.GetAllUserInfo(
-                m_daoFP.MachineNo,
-                ref iEnrollNumber,
-                ref sName,
-                ref sPassword,
-                ref iPrivilege,
-                ref bEnabled))
-                //while (_axCZKEM1.SSR_GetAllUserInfo(
-                //m_daoFP.MachineNo,
-                //out sEnrollNumber,
-                //out sName,
-                //out sPassword,
-                //out iPrivilege,
-                //out bEnabled))
+
+            //判斷舊款或新款裝置，分別讀取不同的API;//
+            if (m_daoTC.Type == 0)
             {
-                DaoUserInfo Info = new DaoUserInfo();
+                while (_axCZKEM1.GetAllUserInfo(
+                    m_daoTC.MachineNo,
+                    ref iEnrollNumber,
+                    ref sName,
+                    ref sPassword,
+                    ref iPrivilege,
+                    ref bEnabled))
+                {
+                    DaoUserInfo Info = new DaoUserInfo();
 
-                Info.UserID = iEnrollNumber;
-                Info.Name = sName;
-                _axCZKEM1.GetStrCardNumber(out sCardNum);
-                Info.CardNum = sCardNum.PadLeft(10, '0');
-                Info.Privilege = iPrivilege;
-                Info.Enable = bEnabled;
+                    Info.UserID = iEnrollNumber;
+                    Info.Name = sName;
+                    _axCZKEM1.GetStrCardNumber(out sCardNum);
+                    Info.CardNum = sCardNum.PadLeft(10, '0');
+                    Info.Privilege = iPrivilege;
+                    Info.Enable = bEnabled;
 
-                lUserInfo.Add(Info);
+                    lUserInfo.Add(Info);
+                }
+            }
+            else
+            {
+                while (_axCZKEM1.SSR_GetAllUserInfo(
+                    m_daoTC.MachineNo,
+                    out sEnrollNumber,
+                    out sName,
+                    out sPassword,
+                    out iPrivilege,
+                    out bEnabled))
+                {
+                    DaoUserInfo Info = new DaoUserInfo();
+
+                    Info.UserID = sEnrollNumber.ToLong();
+                    Info.Name = sName;
+                    _axCZKEM1.GetStrCardNumber(out sCardNum);
+                    Info.CardNum = sCardNum.PadLeft(10, '0');
+                    Info.Privilege = iPrivilege;
+                    Info.Enable = bEnabled;
+
+                    lUserInfo.Add(Info);
+                }
             }
 
             return lUserInfo;
@@ -155,19 +175,19 @@ namespace MYPAM.Model.Device
 
         private bool DeleteAllUserInfo()
         {
-            if (m_daoFP.Connect != DaoFingerPrint.eConnectState.eCON_CONNECTED)
+            if (m_daoTC.Connect != DaoTimeClock.eConnectState.eCON_CONNECTED)
                 return false;
 
-            _axCZKEM1.EnableDevice(m_daoFP.MachineNo, false);
+            _axCZKEM1.EnableDevice(m_daoTC.MachineNo, false);
 
             int idwErrorCode = 0;
 
             int iDataFlag = 5;
 
-            if (_axCZKEM1.ClearData(m_daoFP.MachineNo, iDataFlag))
+            if (_axCZKEM1.ClearData(m_daoTC.MachineNo, iDataFlag))
             {
                 //the data in the device should be refreshed
-                _axCZKEM1.RefreshData(m_daoFP.MachineNo);
+                _axCZKEM1.RefreshData(m_daoTC.MachineNo);
                 //MessageBox.Show("Clear all the UserInfo data!", "Success");
             }
             else
@@ -176,21 +196,21 @@ namespace MYPAM.Model.Device
                 MessageBox.Show("Operation failed,ErrorCode=" + idwErrorCode.ToString(), "Error");
             }
 
-            _axCZKEM1.EnableDevice(m_daoFP.MachineNo, true);
+            _axCZKEM1.EnableDevice(m_daoTC.MachineNo, true);
 
             return true;
         }
 
         public bool UploadUserInfo(List<DaoUserInfo> lUserInfo)
         {
-            if (m_daoFP.Connect != DaoFingerPrint.eConnectState.eCON_CONNECTED)
+            if (m_daoTC.Connect != DaoTimeClock.eConnectState.eCON_CONNECTED)
                 return false;
 
             //先刪除考勤機上的人員資訊;//
             if (DeleteAllUserInfo() == false)
                 return false;
 
-            _axCZKEM1.EnableDevice(m_daoFP.MachineNo, false);
+            _axCZKEM1.EnableDevice(m_daoTC.MachineNo, false);
 
             //再上傳人員資訊;//
             foreach (DaoUserInfo userInfo in lUserInfo)
@@ -199,7 +219,7 @@ namespace MYPAM.Model.Device
                 _axCZKEM1.SetStrCardNumber(userInfo.CardNum);
 
                 //upload the user's information(card number included)
-                if (_axCZKEM1.SetUserInfo(m_daoFP.MachineNo, userInfo.UserID.ToInt(), userInfo.Name, "", userInfo.Privilege, userInfo.Enable))
+                if (_axCZKEM1.SetUserInfo(m_daoTC.MachineNo, userInfo.UserID.ToInt(), userInfo.Name, "", userInfo.Privilege, userInfo.Enable))
                 {
                     //MessageBox.Show("SetUserInfo,UserID:" + userInfo.UserID.ToString() + " Privilege:" + userInfo.Privilege.ToString() + " Cardnumber:" + userInfo.CardNum + " Enabled:" + userInfo.Enable, "Success");
                 }
@@ -210,15 +230,15 @@ namespace MYPAM.Model.Device
                     MessageBox.Show("Operation failed,ErrorCode=" + idwErrorCode.ToString(), "Error");
 
                     //the data in the device should be refreshed
-                    _axCZKEM1.RefreshData(m_daoFP.MachineNo);
-                    _axCZKEM1.EnableDevice(m_daoFP.MachineNo, true);
+                    _axCZKEM1.RefreshData(m_daoTC.MachineNo);
+                    _axCZKEM1.EnableDevice(m_daoTC.MachineNo, true);
                     return false;
                 }
             }
 
             //the data in the device should be refreshed
-            _axCZKEM1.RefreshData(m_daoFP.MachineNo);
-            _axCZKEM1.EnableDevice(m_daoFP.MachineNo, true);
+            _axCZKEM1.RefreshData(m_daoTC.MachineNo);
+            _axCZKEM1.EnableDevice(m_daoTC.MachineNo, true);
 
             return true;
         }
@@ -230,16 +250,16 @@ namespace MYPAM.Model.Device
         public bool DeleteAttendance()
         {
             //不處於刪除狀態就不予處理;//
-            if (m_daoFP.Connect != DaoFingerPrint.eConnectState.eCON_CLEAR_ATT)
+            if (m_daoTC.Connect != DaoTimeClock.eConnectState.eCON_CLEAR_ATT)
                 return false;
 
             int idwErrorCode = 0;
 
-            _axCZKEM1.EnableDevice(m_daoFP.MachineNo, false);//disable the device
-            if (_axCZKEM1.ClearGLog(m_daoFP.MachineNo))
+            _axCZKEM1.EnableDevice(m_daoTC.MachineNo, false);//disable the device
+            if (_axCZKEM1.ClearGLog(m_daoTC.MachineNo))
             {
                 //the data in the device should be refreshed
-                _axCZKEM1.RefreshData(m_daoFP.MachineNo);
+                _axCZKEM1.RefreshData(m_daoTC.MachineNo);
                 //MessageBox.Show("All att Logs have been cleared from teiminal!", "Success");
             }
             else
@@ -249,7 +269,7 @@ namespace MYPAM.Model.Device
             }
             
             //enable the device
-            _axCZKEM1.EnableDevice(m_daoFP.MachineNo, true);
+            _axCZKEM1.EnableDevice(m_daoTC.MachineNo, true);
 
             return idwErrorCode == 0 ? true : false;
         }
@@ -260,13 +280,13 @@ namespace MYPAM.Model.Device
         /// <returns></returns>
         public int GetAttendanceCount()
         {
-            if (m_daoFP.Connect != DaoFingerPrint.eConnectState.eCON_CONNECTED)
+            if (m_daoTC.Connect != DaoTimeClock.eConnectState.eCON_CONNECTED)
                 return 0;
 
             int iValue = 0;
 
             //Here we use the function "GetDeviceStatus" to get the record's count.The parameter "Status" is 6.
-            if (_axCZKEM1.GetDeviceStatus(m_daoFP.MachineNo, 6, ref iValue)) 
+            if (_axCZKEM1.GetDeviceStatus(m_daoTC.MachineNo, 6, ref iValue)) 
                 return iValue;
 
             return 0;
@@ -282,7 +302,7 @@ namespace MYPAM.Model.Device
             List<DaoAttendance> lAttInfo = new List<DaoAttendance>();
 
             //不處於連現狀態就不予處理;//
-            if (m_daoFP.Connect != DaoFingerPrint.eConnectState.eCON_CONNECTED )
+            if (m_daoTC.Connect != DaoTimeClock.eConnectState.eCON_CONNECTED )
                 return lAttInfo;
 
             int iEnrollNumber = 0;
@@ -300,56 +320,77 @@ namespace MYPAM.Model.Device
             string sCardNum = "";
             int idwErrorCode = 0;
 
-            _axCZKEM1.EnableDevice(m_daoFP.MachineNo, false);//disable the device
+            _axCZKEM1.EnableDevice(m_daoTC.MachineNo, false);//disable the device
 
-            _axCZKEM1.GetProductCode(m_daoFP.MachineNo, out sCardNum);
+            _axCZKEM1.GetProductCode(m_daoTC.MachineNo, out sCardNum);
 
-            if (_axCZKEM1.ReadGeneralLogData(m_daoFP.MachineNo))//read all the attendance records to the memory
+            if (_axCZKEM1.ReadGeneralLogData(m_daoTC.MachineNo))//read all the attendance records to the memory
             {
                 //資料已讀取到本機，重新開啟設備;//
-                _axCZKEM1.EnableDevice(m_daoFP.MachineNo, true);
+                _axCZKEM1.EnableDevice(m_daoTC.MachineNo, true);
 
                 int ReadCount = 0;
 
-                while (_axCZKEM1.GetGeneralExtLogData(
-                    m_daoFP.MachineNo,
-                    ref iEnrollNumber,
-                    ref iVerifyMode,
-                    ref iInOutMode,
-                    ref iYear,
-                    ref iMonth,
-                    ref iDay,
-                    ref iHour,
-                    ref iMinute,
-                    ref iSecond,
-                    ref iWorkcode,
-                    ref iReserved))
-                    //while (_axCZKEM1.SSR_GetGeneralLogData(
-                    //m_daoFP.MachineNo,
-                    //out sEnrollNumber,
-                    //out iVerifyMode,
-                    //out iInOutMode,
-                    //out iYear,
-                    //out iMonth,
-                    //out iDay,
-                    //out iHour,
-                    //out iMinute,
-                    //out iSecond,
-                    //ref iWorkcode))
+                if(m_daoTC.Type == 0 )
                 {
-                    if (ReadCount >= Index)
+                    while (_axCZKEM1.GetGeneralExtLogData(
+                        m_daoTC.MachineNo,
+                        ref iEnrollNumber,
+                        ref iVerifyMode,
+                        ref iInOutMode,
+                        ref iYear,
+                        ref iMonth,
+                        ref iDay,
+                        ref iHour,
+                        ref iMinute,
+                        ref iSecond,
+                        ref iWorkcode,
+                        ref iReserved))
                     {
-                        DaoAttendance Info = new DaoAttendance();
-                        Info.UserID = iEnrollNumber;
-                        //Info.UserName;   //從Employees表格取得;//
-                        //Info.CardNumber; //從Employees表格取得;//
-                        Info.Location = m_daoFP.Location;
-                        string Date = string.Format("{0}-{1:00}-{2:00} {3:00}:{4:00}:{5:00}", iYear, iMonth, iDay, iHour, iMinute, iSecond);
-                        Info.RecordTime = DateTime.ParseExact(Date, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-                        lAttInfo.Add(Info);
-                    }
+                        if (ReadCount >= Index)
+                        {
+                            DaoAttendance Info = new DaoAttendance();
+                            Info.UserID = iEnrollNumber;
+                            //Info.UserName;   //從Employees表格取得;//
+                            //Info.CardNumber; //從Employees表格取得;//
+                            Info.Location = m_daoTC.Location;
+                            string Date = string.Format("{0}-{1:00}-{2:00} {3:00}:{4:00}:{5:00}", iYear, iMonth, iDay, iHour, iMinute, iSecond);
+                            Info.RecordTime = DateTime.ParseExact(Date, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                            lAttInfo.Add(Info);
+                        }
 
-                    ReadCount++;
+                        ReadCount++;
+                    }
+                }
+                else
+                {
+                    while (_axCZKEM1.SSR_GetGeneralLogData(
+                            m_daoTC.MachineNo,
+                            out sEnrollNumber,
+                            out iVerifyMode,
+                            out iInOutMode,
+                            out iYear,
+                            out iMonth,
+                            out iDay,
+                            out iHour,
+                            out iMinute,
+                            out iSecond,
+                            ref iWorkcode))
+                    {
+                        if (ReadCount >= Index)
+                        {
+                            DaoAttendance Info = new DaoAttendance();
+                            Info.UserID = sEnrollNumber.ToInt();
+                            //Info.UserName;   //從Employees表格取得;//
+                            //Info.CardNumber; //從Employees表格取得;//
+                            Info.Location = m_daoTC.Location;
+                            string Date = string.Format("{0}-{1:00}-{2:00} {3:00}:{4:00}:{5:00}", iYear, iMonth, iDay, iHour, iMinute, iSecond);
+                            Info.RecordTime = DateTime.ParseExact(Date, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                            lAttInfo.Add(Info);
+                        }
+
+                        ReadCount++;
+                    }
                 }
             }
             else
@@ -365,7 +406,7 @@ namespace MYPAM.Model.Device
                     //MessageBox.Show("No data from terminal returns!", "Error");
                 }
 
-                _axCZKEM1.EnableDevice(m_daoFP.MachineNo, true);
+                _axCZKEM1.EnableDevice(m_daoTC.MachineNo, true);
             }
 
             return lAttInfo;

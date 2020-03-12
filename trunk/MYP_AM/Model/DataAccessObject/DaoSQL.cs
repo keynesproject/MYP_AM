@@ -152,7 +152,7 @@ namespace MYPAM.Model.DataAccessObject
         /// 取得要連接的設備訊息
         /// </summary>
         /// <returns>[ID, Name, MachineNo, IP, Port, Enable]</returns>
-        internal List<DaoFingerPrint> GetMachineInfo()
+        internal List<DaoTimeClock> GetMachineInfo()
         {
             string strSchema = "select * from tbMachine;";
 
@@ -163,7 +163,21 @@ namespace MYPAM.Model.DataAccessObject
             dt.Columns.Add("strConnect", typeof(string));
             dt.Columns.Add("strEnable", typeof(string));
 
-            return dt.ToList<DaoFingerPrint>().ToList();
+            return dt.ToList<DaoTimeClock>().ToList();
+        }
+
+        internal List<DaoTimeClock> GetMachineInfo(int ID)
+        {
+            string strSchema = string.Format("select * from tbMachine WHERE ID={0};", ID);
+
+            DataTable dt = GetDataTable(strSchema);
+
+            dt.Columns.Add("AttendanceCount", typeof(int));
+            dt.Columns.Add("Connect", typeof(bool));
+            dt.Columns.Add("strConnect", typeof(string));
+            dt.Columns.Add("strEnable", typeof(string));
+
+            return dt.ToList<DaoTimeClock>().ToList();
         }
 
         internal bool isExistMachine(string IP, int Port)
@@ -187,19 +201,45 @@ namespace MYPAM.Model.DataAccessObject
         /// <param name="IP"></param>
         /// <param name="Port"></param>
         /// <returns></returns>
-        internal DaoErrMsg AddNewMachine(string Name, string Location, int No, string IP, int Port, bool isEnable)
+        internal DaoErrMsg AddNewMachine(string Name, string Location, int No, string IP, int Port, bool isEnable, int type)
         {
-            string strSchema = string.Format(@"INSERT OR REPLACE INTO tbMachine(ID, Name, MachineNo, Location, IP, Port, Enable)
+            string strSchema = string.Format(@"INSERT OR REPLACE INTO tbMachine(ID, Name, MachineNo, Location, IP, Port, Enable, Type)
                                               VALUES((select ID from tbMachine where IP=@P0 and Port={0}),
                                                  @P1,
                                                  {1},
                                                  '{2}',
                                                  @P2,
                                                  {0},
-                                                 {3});",
-                                              Port, No, Location, isEnable == true ? 1 : 0);
+                                                 {3},
+                                                 {4});",
+                                              Port, No, Location, isEnable == true ? 1 : 0, type);
             
             return _SQL.ExecuteNonQuery(strSchema, IP, Name, IP);
+        }
+
+        /// <summary>
+        /// 儲存設備連接資訊
+        /// </summary>
+        /// <param name="Name"></param>
+        /// <param name="No"></param>
+        /// <param name="IP"></param>
+        /// <param name="Port"></param>
+        /// <returns></returns>
+        internal DaoErrMsg SaveMachine(int ID, string Name, string Location, int No, string IP, int Port, bool isEnable, int type)
+        {
+            string strSchema = string.Format(@"INSERT OR REPLACE INTO tbMachine(ID, Name, MachineNo, Location, IP, Port, Enable, Type)
+                                              VALUES(
+                                                 {0},
+                                                 @P0,
+                                                 {1},
+                                                 '{2}',
+                                                 @P1,
+                                                 {3},
+                                                 {4},
+                                                 {5});",
+                                              ID, No, Location, Port, isEnable == true ? 1 : 0, type);
+
+            return _SQL.ExecuteNonQuery(strSchema, Name, IP);
         }
 
         /// <summary>
@@ -594,6 +634,22 @@ namespace MYPAM.Model.DataAccessObject
             }
             DataTable dt = GetDataTable(strSchema);
             return dt;
+        }
+
+        internal void GetOutFileSetting(out int IDLen, out int SpaceLen)
+        {
+            string value = string.Empty;
+            _SQL.ExecuteScalar("SELECT IDLen FROM tbSetting WHERE ID = 1;", out value);
+            IDLen = value.ToInt();
+
+            _SQL.ExecuteScalar("SELECT SpaceLen FROM tbSetting WHERE ID = 1;", out value);
+            SpaceLen = value.ToInt();
+        }
+
+        internal void SaveFileSetting(int IDLen, int SpaceLen)
+        {
+            string strSchema = string.Format("UPDATE tbSetting SET IDLen = {0}, SpaceLen = {1} WHERE ID = 1;", IDLen, SpaceLen);
+            _SQL.ExecuteNonQuery(strSchema);
         }
     }
 }

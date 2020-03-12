@@ -68,6 +68,7 @@
             this.tsSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tsBtnAddDevice = new System.Windows.Forms.ToolStripButton();
             this.tsBtnRemoveDevice = new System.Windows.Forms.ToolStripButton();
+            this.tsBtnEditDevice = new System.Windows.Forms.ToolStripButton();
             this.tsSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.tsBtnExit = new System.Windows.Forms.ToolStripButton();
             this.tsbtnAbout = new System.Windows.Forms.ToolStripButton();
@@ -86,8 +87,10 @@
             this.columnIP = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.columnPort = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.columnAttCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.columnType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tClock = new System.Windows.Forms.Timer(this.components);
             this.tGiveTime = new System.Windows.Forms.Timer(this.components);
+            this.tsmiOutFormat = new System.Windows.Forms.ToolStripMenuItem();
             this.msMain.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.ssStatus.SuspendLayout();
@@ -113,10 +116,11 @@
             this.tsmiDatabase,
             this.tsSeparatorSetting01,
             this.tsmiMYP,
+            this.tsmiOutFormat,
             this.tsSeparatorSetting02,
             this.tsmiExit});
             this.tsmiMainSetting.Name = "tsmiMainSetting";
-            this.tsmiMainSetting.Size = new System.Drawing.Size(44, 20);
+            this.tsmiMainSetting.Size = new System.Drawing.Size(43, 20);
             this.tsmiMainSetting.Text = "設定";
             // 
             // tsmiOption
@@ -138,7 +142,7 @@
             // 員工資料ToolStripMenuItem
             // 
             this.員工資料ToolStripMenuItem.Name = "員工資料ToolStripMenuItem";
-            this.員工資料ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.員工資料ToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.員工資料ToolStripMenuItem.Text = "員工資料 (&E)";
             this.員工資料ToolStripMenuItem.Visible = false;
             this.員工資料ToolStripMenuItem.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TsBtnEmployee_MouseUp);
@@ -146,7 +150,7 @@
             // 考勤資料ToolStripMenuItem
             // 
             this.考勤資料ToolStripMenuItem.Name = "考勤資料ToolStripMenuItem";
-            this.考勤資料ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.考勤資料ToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.考勤資料ToolStripMenuItem.Text = "考勤資料 (&A)";
             this.考勤資料ToolStripMenuItem.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TsbtnAttendance_MouseUp);
             // 
@@ -179,13 +183,13 @@
             this.temiMainHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiAbout});
             this.temiMainHelp.Name = "temiMainHelp";
-            this.temiMainHelp.Size = new System.Drawing.Size(44, 20);
+            this.temiMainHelp.Size = new System.Drawing.Size(43, 20);
             this.temiMainHelp.Text = "說明";
             // 
             // tsmiAbout
             // 
             this.tsmiAbout.Name = "tsmiAbout";
-            this.tsmiAbout.Size = new System.Drawing.Size(180, 22);
+            this.tsmiAbout.Size = new System.Drawing.Size(165, 22);
             this.tsmiAbout.Text = "關於木研科技 (&A)";
             this.tsmiAbout.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TsbtnAbout_MouseUp);
             // 
@@ -207,13 +211,14 @@
             this.tsSeparator3,
             this.tsBtnAddDevice,
             this.tsBtnRemoveDevice,
+            this.tsBtnEditDevice,
             this.tsSeparator4,
             this.tsBtnExit,
             this.tsbtnAbout});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip1.Size = new System.Drawing.Size(784, 53);
+            this.toolStrip1.Size = new System.Drawing.Size(784, 52);
             this.toolStrip1.Stretch = true;
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
@@ -225,7 +230,7 @@
             this.tsBtnEmployee.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.tsBtnEmployee.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsBtnEmployee.Name = "tsBtnEmployee";
-            this.tsBtnEmployee.Size = new System.Drawing.Size(60, 50);
+            this.tsBtnEmployee.Size = new System.Drawing.Size(59, 49);
             this.tsBtnEmployee.Text = "員工資料";
             this.tsBtnEmployee.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.tsBtnEmployee.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -240,7 +245,7 @@
             this.tsbtnAttendance.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.tsbtnAttendance.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnAttendance.Name = "tsbtnAttendance";
-            this.tsbtnAttendance.Size = new System.Drawing.Size(60, 50);
+            this.tsbtnAttendance.Size = new System.Drawing.Size(59, 49);
             this.tsbtnAttendance.Text = "考勤資料";
             this.tsbtnAttendance.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.tsbtnAttendance.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -250,7 +255,7 @@
             // tsSeparator1
             // 
             this.tsSeparator1.Name = "tsSeparator1";
-            this.tsSeparator1.Size = new System.Drawing.Size(6, 53);
+            this.tsSeparator1.Size = new System.Drawing.Size(6, 52);
             // 
             // tsBtnStartLoadDevice
             // 
@@ -259,7 +264,7 @@
             this.tsBtnStartLoadDevice.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.tsBtnStartLoadDevice.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsBtnStartLoadDevice.Name = "tsBtnStartLoadDevice";
-            this.tsBtnStartLoadDevice.Size = new System.Drawing.Size(60, 50);
+            this.tsBtnStartLoadDevice.Size = new System.Drawing.Size(59, 49);
             this.tsBtnStartLoadDevice.Text = "連線下載";
             this.tsBtnStartLoadDevice.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.tsBtnStartLoadDevice.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -272,7 +277,7 @@
             this.tsBtnStopLoadDevice.Image = global::MYPAM.Properties.Resources.IconStop;
             this.tsBtnStopLoadDevice.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsBtnStopLoadDevice.Name = "tsBtnStopLoadDevice";
-            this.tsBtnStopLoadDevice.Size = new System.Drawing.Size(60, 50);
+            this.tsBtnStopLoadDevice.Size = new System.Drawing.Size(59, 49);
             this.tsBtnStopLoadDevice.Text = "停止連線";
             this.tsBtnStopLoadDevice.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsBtnStopLoadDevice.ToolTipText = "停止連線刷卡機";
@@ -284,7 +289,7 @@
             this.tsBtnUpdateData.Image = global::MYPAM.Properties.Resources.IconRefresh;
             this.tsBtnUpdateData.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsBtnUpdateData.Name = "tsBtnUpdateData";
-            this.tsBtnUpdateData.Size = new System.Drawing.Size(60, 50);
+            this.tsBtnUpdateData.Size = new System.Drawing.Size(59, 49);
             this.tsBtnUpdateData.Text = "立即更新";
             this.tsBtnUpdateData.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsBtnUpdateData.ToolTipText = "立即更新本地資料";
@@ -293,7 +298,7 @@
             // tsSeparator2
             // 
             this.tsSeparator2.Name = "tsSeparator2";
-            this.tsSeparator2.Size = new System.Drawing.Size(6, 53);
+            this.tsSeparator2.Size = new System.Drawing.Size(6, 52);
             // 
             // tsBtnEnableDevice
             // 
@@ -301,7 +306,7 @@
             this.tsBtnEnableDevice.Image = global::MYPAM.Properties.Resources.IconEnableDevice;
             this.tsBtnEnableDevice.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsBtnEnableDevice.Name = "tsBtnEnableDevice";
-            this.tsBtnEnableDevice.Size = new System.Drawing.Size(60, 50);
+            this.tsBtnEnableDevice.Size = new System.Drawing.Size(59, 49);
             this.tsBtnEnableDevice.Text = "啟用設備";
             this.tsBtnEnableDevice.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsBtnEnableDevice.ToolTipText = "啟用刷卡機";
@@ -313,7 +318,7 @@
             this.tsBtnDisableDevice.Image = global::MYPAM.Properties.Resources.IconDisableDevice;
             this.tsBtnDisableDevice.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsBtnDisableDevice.Name = "tsBtnDisableDevice";
-            this.tsBtnDisableDevice.Size = new System.Drawing.Size(60, 50);
+            this.tsBtnDisableDevice.Size = new System.Drawing.Size(59, 49);
             this.tsBtnDisableDevice.Text = "禁用設備";
             this.tsBtnDisableDevice.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsBtnDisableDevice.ToolTipText = "禁用刷卡機";
@@ -325,7 +330,7 @@
             this.tsBtnDelDeviceAttendance.Image = global::MYPAM.Properties.Resources.IconClearDeviceData;
             this.tsBtnDelDeviceAttendance.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsBtnDelDeviceAttendance.Name = "tsBtnDelDeviceAttendance";
-            this.tsBtnDelDeviceAttendance.Size = new System.Drawing.Size(60, 50);
+            this.tsBtnDelDeviceAttendance.Size = new System.Drawing.Size(59, 49);
             this.tsBtnDelDeviceAttendance.Text = "刪除考勤";
             this.tsBtnDelDeviceAttendance.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsBtnDelDeviceAttendance.ToolTipText = "刪除刷卡機考勤資訊";
@@ -334,14 +339,14 @@
             // tsSeparator3
             // 
             this.tsSeparator3.Name = "tsSeparator3";
-            this.tsSeparator3.Size = new System.Drawing.Size(6, 53);
+            this.tsSeparator3.Size = new System.Drawing.Size(6, 52);
             // 
             // tsBtnAddDevice
             // 
             this.tsBtnAddDevice.Image = global::MYPAM.Properties.Resources.IconAddDevice;
             this.tsBtnAddDevice.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsBtnAddDevice.Name = "tsBtnAddDevice";
-            this.tsBtnAddDevice.Size = new System.Drawing.Size(60, 50);
+            this.tsBtnAddDevice.Size = new System.Drawing.Size(59, 49);
             this.tsBtnAddDevice.Text = "新增設備";
             this.tsBtnAddDevice.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsBtnAddDevice.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TsBtnAddDevice_MouseUp);
@@ -351,23 +356,34 @@
             this.tsBtnRemoveDevice.Image = global::MYPAM.Properties.Resources.IconRemoveDevice;
             this.tsBtnRemoveDevice.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsBtnRemoveDevice.Name = "tsBtnRemoveDevice";
-            this.tsBtnRemoveDevice.Size = new System.Drawing.Size(60, 50);
+            this.tsBtnRemoveDevice.Size = new System.Drawing.Size(59, 49);
             this.tsBtnRemoveDevice.Text = "移除設備";
             this.tsBtnRemoveDevice.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsBtnRemoveDevice.ToolTipText = "移除設備";
             this.tsBtnRemoveDevice.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TsBtnRemoveDevice_MouseUp);
             // 
+            // tsBtnEditDevice
+            // 
+            this.tsBtnEditDevice.Image = global::MYPAM.Properties.Resources.IconSetting;
+            this.tsBtnEditDevice.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsBtnEditDevice.Name = "tsBtnEditDevice";
+            this.tsBtnEditDevice.Size = new System.Drawing.Size(59, 49);
+            this.tsBtnEditDevice.Text = "編輯設備";
+            this.tsBtnEditDevice.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsBtnEditDevice.ToolTipText = "編輯設備";
+            this.tsBtnEditDevice.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TsBtnEditDevice_MouseUp);
+            // 
             // tsSeparator4
             // 
             this.tsSeparator4.Name = "tsSeparator4";
-            this.tsSeparator4.Size = new System.Drawing.Size(6, 53);
+            this.tsSeparator4.Size = new System.Drawing.Size(6, 52);
             // 
             // tsBtnExit
             // 
             this.tsBtnExit.Image = global::MYPAM.Properties.Resources.IconPowerOff;
             this.tsBtnExit.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsBtnExit.Name = "tsBtnExit";
-            this.tsBtnExit.Size = new System.Drawing.Size(60, 50);
+            this.tsBtnExit.Size = new System.Drawing.Size(59, 49);
             this.tsBtnExit.Text = "退出系統";
             this.tsBtnExit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsBtnExit.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TsBtnExit_MouseUp);
@@ -377,7 +393,7 @@
             this.tsbtnAbout.Image = global::MYPAM.Properties.Resources.IconInfo;
             this.tsbtnAbout.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnAbout.Name = "tsbtnAbout";
-            this.tsbtnAbout.Size = new System.Drawing.Size(60, 50);
+            this.tsbtnAbout.Size = new System.Drawing.Size(59, 49);
             this.tsbtnAbout.Text = "關於木研";
             this.tsbtnAbout.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbtnAbout.ToolTipText = "關於木研科技";
@@ -388,10 +404,10 @@
             this.ssStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsslState,
             this.tsslTime});
-            this.ssStatus.Location = new System.Drawing.Point(0, 387);
+            this.ssStatus.Location = new System.Drawing.Point(0, 388);
             this.ssStatus.Name = "ssStatus";
             this.ssStatus.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
-            this.ssStatus.Size = new System.Drawing.Size(784, 25);
+            this.ssStatus.Size = new System.Drawing.Size(784, 24);
             this.ssStatus.TabIndex = 2;
             this.ssStatus.Text = "statusStrip1";
             // 
@@ -403,7 +419,7 @@
             this.tsslState.BorderStyle = System.Windows.Forms.Border3DStyle.Adjust;
             this.tsslState.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tsslState.Name = "tsslState";
-            this.tsslState.Size = new System.Drawing.Size(383, 20);
+            this.tsslState.Size = new System.Drawing.Size(383, 19);
             this.tsslState.Spring = true;
             this.tsslState.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -416,7 +432,7 @@
             this.tsslTime.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tsslTime.Name = "tsslTime";
             this.tsslTime.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tsslTime.Size = new System.Drawing.Size(383, 20);
+            this.tsslTime.Size = new System.Drawing.Size(383, 19);
             this.tsslTime.Spring = true;
             this.tsslTime.Text = "上午 12:30:30";
             this.tsslTime.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -448,9 +464,10 @@
             this.columnNo,
             this.columnIP,
             this.columnPort,
-            this.columnAttCount});
+            this.columnAttCount,
+            this.columnType});
             this.dgvDevice.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvDevice.Location = new System.Drawing.Point(0, 77);
+            this.dgvDevice.Location = new System.Drawing.Point(0, 76);
             this.dgvDevice.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dgvDevice.MultiSelect = false;
             this.dgvDevice.Name = "dgvDevice";
@@ -464,7 +481,7 @@
             this.dgvDevice.RowHeadersVisible = false;
             this.dgvDevice.RowTemplate.Height = 24;
             this.dgvDevice.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvDevice.Size = new System.Drawing.Size(784, 310);
+            this.dgvDevice.Size = new System.Drawing.Size(784, 312);
             this.dgvDevice.TabIndex = 3;
             this.dgvDevice.TabStop = false;
             // 
@@ -604,6 +621,17 @@
             this.columnAttCount.Name = "columnAttCount";
             this.columnAttCount.ReadOnly = true;
             // 
+            // columnType
+            // 
+            this.columnType.DataPropertyName = "Type";
+            this.columnType.HeaderText = "設備款式";
+            this.columnType.MaxInputLength = 2;
+            this.columnType.MinimumWidth = 80;
+            this.columnType.Name = "columnType";
+            this.columnType.ReadOnly = true;
+            this.columnType.Visible = false;
+            this.columnType.Width = 80;
+            // 
             // tClock
             // 
             this.tClock.Enabled = true;
@@ -613,6 +641,14 @@
             // 
             this.tGiveTime.Interval = 60000;
             this.tGiveTime.Tick += new System.EventHandler(this.TGiveTime_Tick);
+            // 
+            // tsmiOutFormat
+            // 
+            this.tsmiOutFormat.Name = "tsmiOutFormat";
+            this.tsmiOutFormat.Size = new System.Drawing.Size(180, 22);
+            this.tsmiOutFormat.Text = "考勤輸出格式設定 ";
+            this.tsmiOutFormat.Visible = false;
+            this.tsmiOutFormat.Click += new System.EventHandler(this.TsmiOutFormat_Click);
             // 
             // FormMain
             // 
@@ -629,7 +665,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MinimumSize = new System.Drawing.Size(800, 450);
             this.Name = "FormMain";
-            this.Text = "木研科技-出勤管理系統 V1.0.0.2";
+            this.Text = "木研科技-出勤管理系統 V1.0.0.3";
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.Shown += new System.EventHandler(this.FormMain_Shown);
             this.msMain.ResumeLayout(false);
@@ -681,6 +717,7 @@
         private System.Windows.Forms.ToolStripButton tsbtnAbout;
         private System.Windows.Forms.ToolStripButton tsBtnEmployee;
         private System.Windows.Forms.ToolStripButton tsbtnAttendance;
+        private System.Windows.Forms.ToolStripButton tsBtnEditDevice;
         private System.Windows.Forms.DataGridViewTextBoxColumn columnID;
         private System.Windows.Forms.DataGridViewTextBoxColumn columnName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnLocation;
@@ -692,6 +729,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn columnIP;
         private System.Windows.Forms.DataGridViewTextBoxColumn columnPort;
         private System.Windows.Forms.DataGridViewTextBoxColumn columnAttCount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn columnType;
+        private System.Windows.Forms.ToolStripMenuItem tsmiOutFormat;
     }
 }
 

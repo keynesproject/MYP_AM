@@ -17,5 +17,8 @@
     <Setting Name="ExportAttPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">./Attendance</Value>
     </Setting>
+    <Setting Name="UpdateAttTimeTickMinute" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
