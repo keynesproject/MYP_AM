@@ -48,8 +48,10 @@
             this.tsmiDatabase = new System.Windows.Forms.ToolStripMenuItem();
             this.員工資料ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.考勤資料ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiExportDeviceAttence = new System.Windows.Forms.ToolStripMenuItem();
             this.tsSeparatorSetting01 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiMYP = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiOutFormat = new System.Windows.Forms.ToolStripMenuItem();
             this.tsSeparatorSetting02 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiExit = new System.Windows.Forms.ToolStripMenuItem();
             this.temiMainHelp = new System.Windows.Forms.ToolStripMenuItem();
@@ -90,7 +92,7 @@
             this.columnType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tClock = new System.Windows.Forms.Timer(this.components);
             this.tGiveTime = new System.Windows.Forms.Timer(this.components);
-            this.tsmiOutFormat = new System.Windows.Forms.ToolStripMenuItem();
+            this.tTickTime = new System.Windows.Forms.Timer(this.components);
             this.msMain.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.ssStatus.SuspendLayout();
@@ -126,7 +128,7 @@
             // tsmiOption
             // 
             this.tsmiOption.Name = "tsmiOption";
-            this.tsmiOption.Size = new System.Drawing.Size(180, 22);
+            this.tsmiOption.Size = new System.Drawing.Size(173, 22);
             this.tsmiOption.Text = "功能設定 (&S)";
             this.tsmiOption.Click += new System.EventHandler(this.TsmiOption_Click);
             // 
@@ -134,15 +136,16 @@
             // 
             this.tsmiDatabase.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.員工資料ToolStripMenuItem,
-            this.考勤資料ToolStripMenuItem});
+            this.考勤資料ToolStripMenuItem,
+            this.tsmiExportDeviceAttence});
             this.tsmiDatabase.Name = "tsmiDatabase";
-            this.tsmiDatabase.Size = new System.Drawing.Size(180, 22);
+            this.tsmiDatabase.Size = new System.Drawing.Size(173, 22);
             this.tsmiDatabase.Text = "檢視資訊 (&D)";
             // 
             // 員工資料ToolStripMenuItem
             // 
             this.員工資料ToolStripMenuItem.Name = "員工資料ToolStripMenuItem";
-            this.員工資料ToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.員工資料ToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             this.員工資料ToolStripMenuItem.Text = "員工資料 (&E)";
             this.員工資料ToolStripMenuItem.Visible = false;
             this.員工資料ToolStripMenuItem.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TsBtnEmployee_MouseUp);
@@ -150,31 +153,47 @@
             // 考勤資料ToolStripMenuItem
             // 
             this.考勤資料ToolStripMenuItem.Name = "考勤資料ToolStripMenuItem";
-            this.考勤資料ToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.考勤資料ToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             this.考勤資料ToolStripMenuItem.Text = "考勤資料 (&A)";
             this.考勤資料ToolStripMenuItem.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TsbtnAttendance_MouseUp);
+            // 
+            // tsmiExportDeviceAttence
+            // 
+            this.tsmiExportDeviceAttence.Enabled = false;
+            this.tsmiExportDeviceAttence.Name = "tsmiExportDeviceAttence";
+            this.tsmiExportDeviceAttence.Size = new System.Drawing.Size(191, 22);
+            this.tsmiExportDeviceAttence.Text = "匯出設備考勤資訊 (&O)";
+            this.tsmiExportDeviceAttence.Click += new System.EventHandler(this.TsmiExportHistoryAttence_Click);
             // 
             // tsSeparatorSetting01
             // 
             this.tsSeparatorSetting01.Name = "tsSeparatorSetting01";
-            this.tsSeparatorSetting01.Size = new System.Drawing.Size(177, 6);
+            this.tsSeparatorSetting01.Size = new System.Drawing.Size(170, 6);
             // 
             // tsmiMYP
             // 
             this.tsmiMYP.Name = "tsmiMYP";
-            this.tsmiMYP.Size = new System.Drawing.Size(180, 22);
+            this.tsmiMYP.Size = new System.Drawing.Size(173, 22);
             this.tsmiMYP.Text = "MYP設定 (&O)";
             this.tsmiMYP.Click += new System.EventHandler(this.TsmiMYP_Click);
+            // 
+            // tsmiOutFormat
+            // 
+            this.tsmiOutFormat.Name = "tsmiOutFormat";
+            this.tsmiOutFormat.Size = new System.Drawing.Size(173, 22);
+            this.tsmiOutFormat.Text = "考勤輸出格式設定 ";
+            this.tsmiOutFormat.Visible = false;
+            this.tsmiOutFormat.Click += new System.EventHandler(this.TsmiOutFormat_Click);
             // 
             // tsSeparatorSetting02
             // 
             this.tsSeparatorSetting02.Name = "tsSeparatorSetting02";
-            this.tsSeparatorSetting02.Size = new System.Drawing.Size(177, 6);
+            this.tsSeparatorSetting02.Size = new System.Drawing.Size(170, 6);
             // 
             // tsmiExit
             // 
             this.tsmiExit.Name = "tsmiExit";
-            this.tsmiExit.Size = new System.Drawing.Size(180, 22);
+            this.tsmiExit.Size = new System.Drawing.Size(173, 22);
             this.tsmiExit.Text = "結束 (&X)";
             this.tsmiExit.Click += new System.EventHandler(this.TsmiExit_Click);
             // 
@@ -642,13 +661,10 @@
             this.tGiveTime.Interval = 60000;
             this.tGiveTime.Tick += new System.EventHandler(this.TGiveTime_Tick);
             // 
-            // tsmiOutFormat
+            // tTickTime
             // 
-            this.tsmiOutFormat.Name = "tsmiOutFormat";
-            this.tsmiOutFormat.Size = new System.Drawing.Size(180, 22);
-            this.tsmiOutFormat.Text = "考勤輸出格式設定 ";
-            this.tsmiOutFormat.Visible = false;
-            this.tsmiOutFormat.Click += new System.EventHandler(this.TsmiOutFormat_Click);
+            this.tTickTime.Interval = 20000;
+            this.tTickTime.Tick += new System.EventHandler(this.tTickTime_Tick);
             // 
             // FormMain
             // 
@@ -665,7 +681,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MinimumSize = new System.Drawing.Size(800, 450);
             this.Name = "FormMain";
-            this.Text = "木研科技-出勤管理系統 V1.0.0.3";
+            this.Text = "木研科技-出勤管理系統 V1.0.0.5";
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.Shown += new System.EventHandler(this.FormMain_Shown);
             this.msMain.ResumeLayout(false);
@@ -731,6 +747,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn columnAttCount;
         private System.Windows.Forms.DataGridViewTextBoxColumn columnType;
         private System.Windows.Forms.ToolStripMenuItem tsmiOutFormat;
+        private System.Windows.Forms.ToolStripMenuItem tsmiExportDeviceAttence;
+        private System.Windows.Forms.Timer tTickTime;
     }
 }
 

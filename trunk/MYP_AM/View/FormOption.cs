@@ -19,7 +19,14 @@ namespace MYPAM.View
         {
             InitializeComponent();
 
+#if DEBUG
+            nudUpdateTick.Minimum = 1;
+            lblTickTimeInfo.Text = "偵錯分鐘(1~60)";
+#endif
+
             //讀取預設值;//
+            cbAutoUpdate.SelectedIndex = Properties.Settings.Default.AutoUpdate == false ? 0 : 1;
+            cbUpdateMethod.SelectedIndex = Properties.Settings.Default.UpdateAttMethod;
             nudUpdateTick.Value = Properties.Settings.Default.UpdateAttTimeTickMinute;
             nudMorningHour.Value = Properties.Settings.Default.DataUpdateMorning.Hour;
             nudMorningMinute.Value = Properties.Settings.Default.DataUpdateMorning.Minute;
@@ -55,6 +62,10 @@ namespace MYPAM.View
         {
             if (CheckField() == false)
                 return;
+
+            Properties.Settings.Default.AutoUpdate = cbAutoUpdate.SelectedIndex == 0 ? false : true;
+
+            Properties.Settings.Default.UpdateAttMethod = cbUpdateMethod.SelectedIndex;
 
             Properties.Settings.Default.UpdateAttTimeTickMinute = nudUpdateTick.Value.ToInt();
 

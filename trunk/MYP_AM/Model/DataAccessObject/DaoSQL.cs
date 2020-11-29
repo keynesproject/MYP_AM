@@ -88,7 +88,7 @@ namespace MYPAM.Model.DataAccessObject
 
             return Err;
         }
-        
+
         /// <summary>
         /// 關閉資料庫連接
         /// </summary>
@@ -102,14 +102,14 @@ namespace MYPAM.Model.DataAccessObject
             _SQL = null;
         }
 
-        internal bool GetRtbMachineEmployee(int machineID, int employeeID )
+        internal bool GetRtbMachineEmployee(int machineID, int employeeID)
         {
             //先檢查此關係資料存不存在，不存在則建立，存在則回傳資料;//
             string strSchema = string.Format("SELECT * FROM rtbMachineEmployee WHERE Employee={0} and Machine={1}", employeeID, machineID);
 
             DataTable dt = GetDataTable(strSchema);
 
-            if(dt.Rows.Count > 0)
+            if (dt.Rows.Count > 0)
                 return dt.Rows[0]["Enable"].ToInt() > 0 ? true : false;
 
             strSchema = string.Format("INSERT INTO rtbMachineEmployee(Machine, Employee) VALUES({0}, {1})", machineID, employeeID);
@@ -126,12 +126,12 @@ namespace MYPAM.Model.DataAccessObject
         /// <param name="v"></param>
         internal void UpdateRtbMachineEmployee(int employeeID, int machineID, bool enable)
         {
-            string strSchema = string.Format("UPDATE rtbMachineEmployee SET [Enable]={0} WHERE Machine={1} AND Employee={2}", 
+            string strSchema = string.Format("UPDATE rtbMachineEmployee SET [Enable]={0} WHERE Machine={1} AND Employee={2}",
                                              enable, machineID, employeeID);
 
             _SQL.ExecuteNonQuery(strSchema);
         }
-        
+
         /// <summary>
         /// 照SQL語法取得Table資料
         /// </summary>
@@ -213,7 +213,7 @@ namespace MYPAM.Model.DataAccessObject
                                                  {3},
                                                  {4});",
                                               Port, No, Location, isEnable == true ? 1 : 0, type);
-            
+
             return _SQL.ExecuteNonQuery(strSchema, IP, Name, IP);
         }
 
@@ -335,7 +335,7 @@ namespace MYPAM.Model.DataAccessObject
                 }
             }
 
-            if(Count != 0)
+            if (Count != 0)
                 return _SQL.ExecuteNonQuery(sbSchema.ToString());
 
             return Msg;
@@ -364,12 +364,12 @@ namespace MYPAM.Model.DataAccessObject
         internal bool CheckExistUserID(string userID)
         {
             string strSchema = string.Format("SELECT count(*) FROM tbEmployees WHERE UserID='{0}'", userID);
-            
+
             string count = string.Empty;
             _SQL.ExecuteScalar(strSchema, out count);
 
             return count.ToInt() > 0 ? true : false;
-        }        
+        }
 
         /// <summary>
         /// 檢查ID與UserID是否在同一列資料中
@@ -535,7 +535,7 @@ namespace MYPAM.Model.DataAccessObject
 
             return Count.ToInt();
         }
-        
+
         /// <summary>
         /// 初始化已讀取的考勤數量
         /// </summary>
@@ -556,7 +556,7 @@ namespace MYPAM.Model.DataAccessObject
         {
             StringBuilder sbSchema = new StringBuilder();
             int Count = 0;
-            foreach(DaoAttendance Info in AttInfo)
+            foreach (DaoAttendance Info in AttInfo)
             {
                 sbSchema.AppendFormat(@"INSERT INTO tbRecords([UserID], [RecordTime], [Name], [CardNum], [Location])
                                                      values('{0}', 
@@ -577,12 +577,27 @@ namespace MYPAM.Model.DataAccessObject
                 }
             }
 
-            if(Count != 0)
+            if (Count != 0)
                 _SQL.ExecuteNonQuery(sbSchema.ToString());
-            
+
             sbSchema.Init();
             sbSchema.AppendFormat("update tbMachine set ReadIndex = ReadIndex + {0} where ID = {1};", AttInfo.Count, DeviceID);
             _SQL.ExecuteNonQuery(sbSchema.ToString());
+        }
+
+        /// <summary>
+        /// 取得全部打卡考勤資訊
+        /// </summary>
+        /// <returns></returns>
+        internal List<DaoAttendance> GetAttendance()
+        {
+            string strSchema = "select cast(UserID as int) as UserID, Name as UserName, CardNum, Location, RecordTime from tbRecords;";
+
+            DataTable dt = GetDataTable(strSchema);
+
+            dt.Columns.Add("sUserID", typeof(string));
+
+            return dt.ToList<DaoAttendance>().ToList();
         }
 
         /// <summary>
@@ -635,21 +650,58 @@ namespace MYPAM.Model.DataAccessObject
             DataTable dt = GetDataTable(strSchema);
             return dt;
         }
-
-        internal void GetOutFileSetting(out int IDLen, out int SpaceLen)
+        
+        /// <summary>
+        /// 取得匯出檔案的格式
+        /// </summary>
+        /// <returns></returns>
+        internal DataTable GetOutFileSetting()
         {
-            string value = string.Empty;
-            _SQL.ExecuteScalar("SELECT IDLen FROM tbSetting WHERE ID = 1;", out value);
-            IDLen = value.ToInt();
-
-            _SQL.ExecuteScalar("SELECT SpaceLen FROM tbSetting WHERE ID = 1;", out value);
-            SpaceLen = value.ToInt();
+            return GetDataTable("SELECT * from tbOutputFormat");
         }
 
-        internal void SaveFileSetting(int IDLen, int SpaceLen)
+        /// <summary>
+        /// 儲存匯出檔案的格式
+        /// </summary>
+        /// <param name="format"></param>
+        internal void SaveFileSetting(List<OutputFormat> format)
         {
-            string strSchema = string.Format("UPDATE tbSetting SET IDLen = {0}, SpaceLen = {1} WHERE ID = 1;", IDLen, SpaceLen);
-            _SQL.ExecuteNonQuery(strSchema);
+            if (format.Count != 7)
+                return;
+            
+            for(int i=0; i<format.Count;i++)
+            {
+                string strSchema = string.Format("UPDATE tbOutputFormat SET Type={0}, Length={1}, Contex=\"{2}\" WHERE ID={3}",
+                                                  (int)format[i].type,
+                                                  format[i].length,
+                                                  format[i].contex,
+                                                  i + 1);
+
+                _SQL.ExecuteNonQuery(strSchema);
+            }
         }
+    }
+
+    public enum eOutputType
+    {
+        eEmployeeID = 1,
+        eCardNo,
+        eString
+    }
+
+    public class OutputFormat
+    {
+        public OutputFormat() { }
+
+        public OutputFormat(eOutputType type, int length, string contex)
+        {
+            this.type = type;
+            this.length = length;
+            this.contex = contex;
+        }
+
+        public eOutputType type { get; set; }
+        public int length { get; set; }
+        public string contex { get; set; }
     }
 }

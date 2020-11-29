@@ -108,7 +108,8 @@ namespace MYPAM.View
             bool isEnable = cbEnable.SelectedIndex == 0 ? true : false;
             int type = cbType.SelectedIndex;
 
-            DaoErrMsg Ret = DaoSQL.Instance.SaveMachine(m_ID, tbName.Text, tbLocation.Text.PadLeft(2, '0'), tbMachineNo.Text.ToInt(), IP, tbPort.Text.ToInt(), isEnable, type);
+            //DaoErrMsg Ret = DaoSQL.Instance.SaveMachine(m_ID, tbName.Text, tbLocation.Text.PadLeft(2, '0'), tbMachineNo.Text.ToInt(), IP, tbPort.Text.ToInt(), isEnable, type);
+            DaoErrMsg Ret = DaoSQL.Instance.SaveMachine(m_ID, tbName.Text, tbLocation.Text, tbMachineNo.Text.ToInt(), IP, tbPort.Text.ToInt(), isEnable, type);
 
             if (Ret.isError == false)
             {
@@ -139,7 +140,8 @@ namespace MYPAM.View
                     return;
             }
 
-            DaoErrMsg Ret = DaoSQL.Instance.AddNewMachine(tbName.Text, tbLocation.Text.PadLeft(2, '0'), tbMachineNo.Text.ToInt(), IP, tbPort.Text.ToInt(), isEnable, type);
+            //DaoErrMsg Ret = DaoSQL.Instance.AddNewMachine(tbName.Text, tbLocation.Text.PadLeft(2, '0'), tbMachineNo.Text.ToInt(), IP, tbPort.Text.ToInt(), isEnable, type);
+            DaoErrMsg Ret = DaoSQL.Instance.AddNewMachine(tbName.Text, tbLocation.Text, tbMachineNo.Text.ToInt(), IP, tbPort.Text.ToInt(), isEnable, type);
 
             if (Ret.isError == false)
             {

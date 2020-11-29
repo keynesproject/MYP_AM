@@ -231,7 +231,7 @@ namespace MYPAM.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 53750804 的當地語系化字串。
+        ///   查詢類似 0053750804 的當地語系化字串。
         /// </summary>
         internal static string PW_MYP_SETTING {
             get {

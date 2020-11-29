@@ -55,7 +55,6 @@ namespace MYPAM
         
         private void FormMain_Load(object sender, EventArgs e)
         {
-
         }
         
         private void FormMain_Shown(object sender, EventArgs e)
@@ -63,6 +62,9 @@ namespace MYPAM
             UiFunctionSetting(ProcessState.eINITIAL);
 
             ReadMachineInfo();
+
+            if (Properties.Settings.Default.AutoUpdate)
+                TsBtnStartLoadDevice_MouseUp(sender, new MouseEventArgs(MouseButtons.Left, 0, 0, 0, 0));
         }
 
         /// <summary>
@@ -77,6 +79,7 @@ namespace MYPAM
                 {
                     case ProcessState.eINITIAL:
                         tsBtnStartLoadDevice.Enabled = true;
+                        tsmiExportDeviceAttence.Enabled = false;
                         tsBtnStopLoadDevice.Enabled = false;
                         tsBtnUpdateData.Enabled = false;
                         tsBtnEnableDevice.Enabled = true;
@@ -85,11 +88,13 @@ namespace MYPAM
                         tsBtnAddDevice.Enabled = true;
                         tsBtnRemoveDevice.Enabled = true;
                         tsslState.Text = string.Format("按下[{0}]開始讀取設備考勤及人員資料", tsBtnStartLoadDevice.Text);
+                        tTickTime.Enabled = false;
                         tGiveTime.Enabled = false;                        
                         break;
 
                     case ProcessState.eCONNECT_DB:
                         tsBtnStartLoadDevice.Enabled = true;
+                        tsmiExportDeviceAttence.Enabled = false;
                         tsBtnStopLoadDevice.Enabled = false;
                         tsBtnUpdateData.Enabled = false;
                         tsBtnEnableDevice.Enabled = true;
@@ -98,21 +103,35 @@ namespace MYPAM
                         tsBtnAddDevice.Enabled = true;
                         tsBtnRemoveDevice.Enabled = true;
                         tsslState.Text = string.Format("按下[{0}]開始讀取設備考勤及人員資料", tsBtnStartLoadDevice.Text);
-                        tGiveTime.Enabled = false;
+                        tTickTime.Enabled = false;
+                        tGiveTime.Enabled = false;                        
                         break;
 
                     case ProcessState.eSTART_DEVICE:
                         tsBtnEnableDevice.Enabled = tsBtnDisableDevice.Enabled = false;
                         tsBtnAddDevice.Enabled = tsBtnRemoveDevice.Enabled = false;
                         tsBtnStartLoadDevice.Enabled = false;
+                        tsmiExportDeviceAttence.Enabled = true;
                         tsBtnStopLoadDevice.Enabled = true;
                         tsBtnDelDeviceAttendance.Enabled = true;
                         tsBtnUpdateData.Enabled = true;
+                        
                         tsslState.Text = "";
                         //紀錄現在時間，並啟動定時更新資料計時器;//
                         dtMark = DateTime.Now;
-                        tGiveTime.Interval = Properties.Settings.Default.UpdateAttTimeTickMinute * 1000;
-                        tGiveTime.Enabled = true;
+
+                        if(Properties.Settings.Default.UpdateAttMethod == 0)
+                        {
+                            //開啟間隔更新;//
+                            dtMark = DateTime.Now;
+                            tTickTime.Enabled = true;
+                        }
+                        else
+                        {
+                            //開啟指定時間更新;//
+                            tGiveTime.Enabled = true;
+                        }                       
+                        
                         break;
 
                     default:
@@ -152,6 +171,11 @@ namespace MYPAM
             dgvDevice.Rows[SelectIndex].Selected = true;            
         }
         
+        /// <summary>
+        /// 開啟設定功能畫面
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TsmiOption_Click(object sender, EventArgs e)
         {
             if (m_CurrentState == ProcessState.eINITIAL || m_CurrentState == ProcessState.eCONNECT_DB)
@@ -548,29 +572,91 @@ namespace MYPAM
         /// 輸出考勤資訊到文字檔
         /// </summary>
         /// <param name="attInfo"></param>
-        private void ExportAttendanceToTxt(List<DaoAttendance> attInfo)
+        private void ExportAttendanceToTxt(List<DaoAttendance> attInfo, bool isHistory = false)
         {
             string FileName = DaoConfigFile.Instance.DirAttExport + "/";
 
-            FileName = FileName + DateTime.Now.ToString("yyyyMMddHHmm") + ".txt";
+            if (isHistory == false)
+                FileName = FileName + DateTime.Now.ToString("yyyyMMddHHmm") + ".txt";
+            else
+                FileName = FileName + "History_" + DateTime.Now.ToString("yyyyMMddHHmm") + ".txt";
             FileStream fs = new FileStream(FileName, FileMode.Append);
-
+            
             StreamWriter sw = new StreamWriter(fs);
 
+            //取得匯出檔案的格式;//
+            DataTable dt = DaoSQL.Instance.GetOutFileSetting();
+            eOutputType outType = (eOutputType)dt.Rows[0]["Type"].ToInt();
+            int outLen = dt.Rows[0]["Length"].ToInt();
+
+            List<OutputFormat> fmt = new List<OutputFormat>();
+            for (int i=1; i<7; i++)
+            {
+                fmt.Add(new OutputFormat(eOutputType.eString, dt.Rows[i]["Length"].ToInt(), dt.Rows[i]["Contex"].ToString()));
+            }
+
+            StringBuilder sb = new StringBuilder();
             foreach (DaoAttendance att in attInfo)
             {
-                sw.Write(string.Format("{0}{1}{2}\r\n",
-                                        string.Format("{0:000000}", att.UserID),
-                                        att.RecordTime.ToString("yyyyMMddHHmm"),
-                                        string.Format("{0:00}", att.Location)));
+                sb.Init();
+                sb.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}\r\n",
+                    outType == eOutputType.eEmployeeID ? att.sUserID.PadLeft(outLen, '0') : att.CardNum.PadLeft(outLen, '0'),
+                    fmt[1].contex.PadLeft(fmt[1].length, ' '), //1:str1
+                    att.RecordTime.ToString("yyyy"),           //2:year
+                    fmt[2].contex.PadLeft(fmt[2].length, ' '), //3:str2
+                    att.RecordTime.ToString("MM"),             //4:mounth
+                    fmt[3].contex.PadLeft(fmt[3].length, ' '), //5:str3
+                    att.RecordTime.ToString("dd"),             //6:day
+                    fmt[4].contex.PadLeft(fmt[4].length, ' '), //7:str4
+                    att.RecordTime.ToString("HH"),             //8:hour
+                    fmt[5].contex.PadLeft(fmt[5].length, ' '), //9:str5
+                    att.RecordTime.ToString("mm"),             //10:minute
+                    fmt[6].contex.PadLeft(fmt[6].length, ' '), //11:str6
+                    att.Location                               //12:location
+                    );
+                sw.Write(sb);
             }
+
             //清空緩衝區
             sw.Flush();
             //關閉流
             sw.Close();
             fs.Close();
         }
-        
+
+        /// <summary>
+        /// 匯出歷史考勤資訊
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TsmiExportHistoryAttence_Click(object sender, EventArgs e)
+        {
+            if (tsmiExportDeviceAttence.Enabled == false)
+                return;
+
+            List<DaoAttendance> TotalAttInfo = new List<DaoAttendance>();
+            foreach (MYP2000 device in m_ConnectDevice)
+            {
+                //讀取設備考勤資訊;//
+                List<DaoAttendance> AttInfo = device.LoadAttendance();
+                if (AttInfo.Count > 0)
+                {
+                    foreach (DaoAttendance att in AttInfo)
+                        TotalAttInfo.Add(att);
+                }
+            }
+
+            if (TotalAttInfo.Count > 0)
+            {
+                ExportAttendanceToTxt(TotalAttInfo, true);
+                MessageBoxEx.Show(this, string.Format("共匯出[{0}]筆考勤資訊.", TotalAttInfo.Count), "匯出考勤資訊", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBoxEx.Show(this, "設備無任何考勤資訊.", "匯出考勤資訊", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
         /// <summary>
         /// 時鐘顯示
         /// </summary>
@@ -581,6 +667,11 @@ namespace MYPAM
             tsslTime.Text = DateTime.Now.ToString("tt HH:mm:ss");
         }
 
+        /// <summary>
+        /// 指定時間更新計時器
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TGiveTime_Tick(object sender, EventArgs e)
         {
             if (   DateTime.Now.Hour == Properties.Settings.Default.DataUpdateMorning.Hour
@@ -602,6 +693,36 @@ namespace MYPAM
                     Thread.Sleep(1000);
                 }
                 UpdateAttAndUser();
+            }
+            //else
+            //{
+            //    //等待讀取資料結束;//
+            //    while (m_isLoading)
+            //    {
+            //        Thread.Sleep(1000);
+            //    }
+            //    UpdateAttAndUser();
+            //}
+        }
+
+        /// <summary>
+        /// 定時更新計時器
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tTickTime_Tick(object sender, EventArgs e)
+        {
+            if (m_isLoading == true)
+                return;
+
+            int SubMinute = Properties.Settings.Default.UpdateAttTimeTickMinute - (DateTime.Now - dtMark).Minutes;
+            tsslState.Text = string.Format("再過{0}分鐘進行考勤機的資料下載.", SubMinute <= 0 ? 1 : SubMinute);
+
+            //進行讀取指紋機考勤;//
+            if (SubMinute <= 0)
+            {
+                UpdateAttAndUser();
+                dtMark = DateTime.Now;
             }
         }
 
@@ -630,11 +751,17 @@ namespace MYPAM
             About.ShowDialog();
         }
 
+        /// <summary>
+        /// 顯示輸出格式視窗
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TsmiOutFormat_Click(object sender, EventArgs e)
         {
             FormOutputFile of = new FormOutputFile();
             of.LoadDefault();
             of.ShowDialog();
         }
+
     }
 }

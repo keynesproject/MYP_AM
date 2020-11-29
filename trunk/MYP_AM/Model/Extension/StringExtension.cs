@@ -255,5 +255,33 @@ namespace MYPAM.Model.Extension
 
             return MultiLanguage;
         }
+
+        /// <summary>
+        /// 從字串最左開始取Num字元
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="Num">取得字元數</param>
+        /// <returns></returns>
+        public static string Left(this string s, int Num)
+        {
+            if (Num >= s.Length)
+                return s;
+
+            return s.Substring(0, Num);
+        }
+
+        /// <summary>
+        /// 從字串最右開始取Num字元
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="Num">取得字元數</param>
+        /// <returns></returns>
+        public static string Right(this string s, int Num)
+        {
+            if (Num >= s.Length)
+                return s;
+
+            return s.Substring(s.Length - Num, Num);
+        }
     }
 }

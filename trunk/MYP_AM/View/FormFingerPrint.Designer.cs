@@ -397,7 +397,7 @@
             "關閉"});
             this.cbEnable.Location = new System.Drawing.Point(85, 183);
             this.cbEnable.Name = "cbEnable";
-            this.cbEnable.Size = new System.Drawing.Size(86, 23);
+            this.cbEnable.Size = new System.Drawing.Size(117, 23);
             this.cbEnable.TabIndex = 5;
             this.cbEnable.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NextControl);
             // 
@@ -420,7 +420,7 @@
             this.tbLocation.Font = new System.Drawing.Font("微軟正黑體", 10F);
             this.tbLocation.Location = new System.Drawing.Point(85, 49);
             this.tbLocation.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tbLocation.MaxLength = 128;
+            this.tbLocation.MaxLength = 10;
             this.tbLocation.Name = "tbLocation";
             this.tbLocation.Size = new System.Drawing.Size(315, 25);
             this.tbLocation.TabIndex = 1;
@@ -444,11 +444,11 @@
             this.cbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbType.FormattingEnabled = true;
             this.cbType.Items.AddRange(new object[] {
-            "舊",
-            "新"});
+            "MYP-A",
+            "MYP-B"});
             this.cbType.Location = new System.Drawing.Point(85, 212);
             this.cbType.Name = "cbType";
-            this.cbType.Size = new System.Drawing.Size(86, 23);
+            this.cbType.Size = new System.Drawing.Size(117, 23);
             this.cbType.TabIndex = 6;
             // 
             // FormTimeClock

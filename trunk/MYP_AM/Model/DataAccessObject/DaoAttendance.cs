@@ -8,7 +8,7 @@ namespace MYPAM.Model.DataAccessObject
 {
     public class DaoAttendance
     {
-        public int UserID { get; set; }
+        public Int64 UserID { get; set; }
 
         public string sUserID
         {
@@ -20,9 +20,10 @@ namespace MYPAM.Model.DataAccessObject
 
                 int HeadLength = ID.Length > 6 ? 2 : 1;
                 string sIndex = ID.Substring(0, HeadLength);
-                string sHead = NunberToChar(sIndex.ToInt());
+                string sHead = NumberToChar(sIndex.ToInt());
                 return sHead + ID.Substring(HeadLength);
             }
+            set { }
         }
                 
         /// <summary>
@@ -33,13 +34,13 @@ namespace MYPAM.Model.DataAccessObject
         /// <summary>
         /// 從Employees表查
         /// </summary>
-        public string CardNumber { get; set; }
+        public string CardNum { get; set; }
 
         public string Location { get; set; }
 
         public DateTime RecordTime { get; set; }
 
-        private string NunberToChar(int number)
+        private string NumberToChar(int number)
         {
             if (1 <= number && 36 >= number)
             {
