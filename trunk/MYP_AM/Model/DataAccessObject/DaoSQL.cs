@@ -522,6 +522,27 @@ namespace MYPAM.Model.DataAccessObject
         }
 
         /// <summary>
+        /// 取得員工姓名及卡號
+        /// </summary>
+        /// <param name="UserID"></param>
+        /// <param name="name"></param>
+        /// <param name="cardNum"></param>
+        /// <returns></returns>
+        internal bool GetEmployeeNameCardnum(int UserID, ref string name, ref string cardNum)
+        {
+            string strSchem = string.Format("select Name, CardNum from tbEmployees where UserID={0}", UserID);
+            DataTable dt = GetDataTable(strSchem);
+
+            if (dt.Rows.Count <= 0)
+                return false;
+
+            name = dt.Rows[0]["Name"].ToString();
+            cardNum = dt.Rows[0]["CardNum"].ToString();
+
+            return true;
+        }
+
+        /// <summary>
         /// 取得目前已讀取的考勤數量
         /// </summary>
         /// <param name="DeviceID"></param>

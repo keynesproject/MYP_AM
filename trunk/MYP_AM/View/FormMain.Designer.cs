@@ -93,6 +93,7 @@
             this.tClock = new System.Windows.Forms.Timer(this.components);
             this.tGiveTime = new System.Windows.Forms.Timer(this.components);
             this.tTickTime = new System.Windows.Forms.Timer(this.components);
+            this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.msMain.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.ssStatus.SuspendLayout();
@@ -200,7 +201,8 @@
             // temiMainHelp
             // 
             this.temiMainHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiAbout});
+            this.tsmiAbout,
+            this.testToolStripMenuItem});
             this.temiMainHelp.Name = "temiMainHelp";
             this.temiMainHelp.Size = new System.Drawing.Size(43, 20);
             this.temiMainHelp.Text = "說明";
@@ -208,7 +210,7 @@
             // tsmiAbout
             // 
             this.tsmiAbout.Name = "tsmiAbout";
-            this.tsmiAbout.Size = new System.Drawing.Size(165, 22);
+            this.tsmiAbout.Size = new System.Drawing.Size(180, 22);
             this.tsmiAbout.Text = "關於木研科技 (&A)";
             this.tsmiAbout.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TsbtnAbout_MouseUp);
             // 
@@ -666,6 +668,14 @@
             this.tTickTime.Interval = 20000;
             this.tTickTime.Tick += new System.EventHandler(this.tTickTime_Tick);
             // 
+            // testToolStripMenuItem
+            // 
+            this.testToolStripMenuItem.Name = "testToolStripMenuItem";
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.testToolStripMenuItem.Text = "Test";
+            this.testToolStripMenuItem.Visible = false;
+            this.testToolStripMenuItem.Click += new System.EventHandler(this.TestToolStripMenuItem_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -749,6 +759,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiOutFormat;
         private System.Windows.Forms.ToolStripMenuItem tsmiExportDeviceAttence;
         private System.Windows.Forms.Timer tTickTime;
+        private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
     }
 }
 

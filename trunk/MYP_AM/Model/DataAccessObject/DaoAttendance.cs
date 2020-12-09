@@ -8,7 +8,20 @@ namespace MYPAM.Model.DataAccessObject
 {
     public class DaoAttendance
     {
-        public Int64 UserID { get; set; }
+        private Int64 _userID;
+
+        public Int64 UserID
+        {
+            get { return _userID; }
+            set
+            {
+                _userID = value;
+                string userName="", cardNum="";
+                DaoSQL.Instance.GetEmployeeNameCardnum(value.ToInt(), ref userName, ref cardNum);
+                this.UserName = userName;
+                this.CardNum = cardNum;
+            }
+        }
 
         public string sUserID
         {
@@ -21,7 +34,7 @@ namespace MYPAM.Model.DataAccessObject
                 int HeadLength = ID.Length > 6 ? 2 : 1;
                 string sIndex = ID.Substring(0, HeadLength);
                 string sHead = NumberToChar(sIndex.ToInt());
-                return sHead + ID.Substring(HeadLength);
+                return sHead + ID.Substring(HeadLength);                
             }
             set { }
         }

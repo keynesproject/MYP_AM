@@ -65,6 +65,10 @@ namespace MYPAM
 
             if (Properties.Settings.Default.AutoUpdate)
                 TsBtnStartLoadDevice_MouseUp(sender, new MouseEventArgs(MouseButtons.Left, 0, 0, 0, 0));
+
+#if DEBUG
+            testToolStripMenuItem.Visible = true;
+#endif
         }
 
         /// <summary>
@@ -581,7 +585,7 @@ namespace MYPAM
             else
                 FileName = FileName + "History_" + DateTime.Now.ToString("yyyyMMddHHmm") + ".txt";
             FileStream fs = new FileStream(FileName, FileMode.Append);
-            
+
             StreamWriter sw = new StreamWriter(fs);
 
             //取得匯出檔案的格式;//
@@ -598,23 +602,52 @@ namespace MYPAM
             StringBuilder sb = new StringBuilder();
             foreach (DaoAttendance att in attInfo)
             {
-                sb.Init();
-                sb.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}\r\n",
-                    outType == eOutputType.eEmployeeID ? att.sUserID.PadLeft(outLen, '0') : att.CardNum.PadLeft(outLen, '0'),
-                    fmt[1].contex.PadLeft(fmt[1].length, ' '), //1:str1
-                    att.RecordTime.ToString("yyyy"),           //2:year
-                    fmt[2].contex.PadLeft(fmt[2].length, ' '), //3:str2
-                    att.RecordTime.ToString("MM"),             //4:mounth
-                    fmt[3].contex.PadLeft(fmt[3].length, ' '), //5:str3
-                    att.RecordTime.ToString("dd"),             //6:day
-                    fmt[4].contex.PadLeft(fmt[4].length, ' '), //7:str4
-                    att.RecordTime.ToString("HH"),             //8:hour
-                    fmt[5].contex.PadLeft(fmt[5].length, ' '), //9:str5
-                    att.RecordTime.ToString("mm"),             //10:minute
-                    fmt[6].contex.PadLeft(fmt[6].length, ' '), //11:str6
-                    att.Location                               //12:location
-                    );
-                sw.Write(sb);
+                try
+                {
+                    sb.Init();
+
+                    string type = outType == eOutputType.eEmployeeID ? att.sUserID : att.CardNum;
+                    if (outLen <= type.Length)
+                    {
+                        type = type.Substring(type.Length - outLen, outLen);
+                    }
+                    else
+                    {
+                        type = type.PadLeft(outLen, '0');
+                    }
+
+                    sb.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}\r\n",
+                        //outType == eOutputType.eEmployeeID ? att.sUserID.PadLeft(outLen, '0') : att.CardNum.PadLeft(outLen, '0'),
+                        type,
+                        fmt[0].contex.PadLeft(fmt[0].length, ' '), //1:str1
+                        att.RecordTime.ToString("yyyy"),           //2:year
+                        fmt[1].contex.PadLeft(fmt[1].length, ' '), //3:str2
+                        att.RecordTime.ToString("MM"),             //4:mounth
+                        fmt[2].contex.PadLeft(fmt[2].length, ' '), //5:str3
+                        att.RecordTime.ToString("dd"),             //6:day
+                        fmt[3].contex.PadLeft(fmt[3].length, ' '), //7:str4
+                        att.RecordTime.ToString("HH"),             //8:hour
+                        fmt[4].contex.PadLeft(fmt[4].length, ' '), //9:str5
+                        att.RecordTime.ToString("mm"),             //10:minute
+                        fmt[5].contex.PadLeft(fmt[5].length, ' '), //11:str6
+                        att.Location                               //12:location
+                        );
+                    sw.Write(sb);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Debug(ex.Message);
+                    Logger.Debug(string.Format("fmt Count:{0}", fmt));
+                    Logger.Debug(string.Format("outType:{0}", outType.ToString()));
+                    Logger.Debug(string.Format("UserID:{0}", att.sUserID));
+                    Logger.Debug(string.Format("CardNum:{0}", att.CardNum));
+                    Logger.Debug(string.Format("fmt[0]:{0}", fmt[0].contex));
+                    Logger.Debug(string.Format("fmt[1]:{0}", fmt[1].contex));
+                    Logger.Debug(string.Format("fmt[2]:{0}", fmt[2].contex));
+                    Logger.Debug(string.Format("fmt[3]:{0}", fmt[3].contex));
+                    Logger.Debug(string.Format("fmt[4]:{0}", fmt[4].contex));
+                    Logger.Debug(string.Format("fmt[5]:{0}", fmt[5].contex));
+                }
             }
 
             //清空緩衝區
@@ -645,7 +678,7 @@ namespace MYPAM
                         TotalAttInfo.Add(att);
                 }
             }
-
+            
             if (TotalAttInfo.Count > 0)
             {
                 ExportAttendanceToTxt(TotalAttInfo, true);
@@ -763,5 +796,19 @@ namespace MYPAM
             of.ShowDialog();
         }
 
+        private void TestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            List<DaoAttendance> TotalAttInfo = new List<DaoAttendance>();
+
+            DaoAttendance temp = new DaoAttendance();
+            temp.UserID = 323456;
+            temp.UserName = "AAAA";
+            temp.CardNum = "223456";
+            temp.Location = "門口";
+            temp.RecordTime = DateTime.Now;
+            TotalAttInfo.Add(temp);
+
+            ExportAttendanceToTxt(TotalAttInfo, true);
+        }
     }
 }
